@@ -229,11 +229,15 @@
                             {/* Placeholder si la map n'est pas chargée */}
                             <div className="absolute inset-0 flex items-center justify-center text-white/20 flex-col gap-4">
                                 <p>Connexion au satellite...</p>
+                                <a href="http://5.255.86.105:25077" target="_blank" rel="noopener noreferrer" className="text-xs text-brand hover:underline mt-2 opacity-60 hover:opacity-100 transition-opacity">
+                                    (Si la carte ne s'affiche pas, cliquez ici)
+                                </a>
                             </div>
                             <iframe 
-                                src="https://daybreaksmp.xyz:8100" // URL BlueMap
+                                src="http://5.255.86.105:25077" 
                                 className="w-full h-full relative z-10"
                                 frameBorder="0"
+                                allowFullScreen
                             ></iframe>
                         </div>
                     </div>
