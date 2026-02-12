@@ -100,7 +100,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            width: 280px;
+            width: 320px;
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -172,51 +172,97 @@
             padding: 20px;
         }
 
-        .status-item {
+        .status-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 12px 0;
+            gap: 8px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .status-item:last-child {
-            border-bottom: none;
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
         }
 
-        .status-item .label {
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-        }
-
-        .status-item .value {
-            font-family: 'Inter', sans-serif;
-            font-weight: 500;
-            color: white;
-            font-size: 14px;
-        }
-
-        .status-online {
-            color: #4CAF50 !important;
-            font-weight: 600 !important;
-        }
-
-        .status-online::before {
-            content: '●';
-            margin-right: 5px;
+        .status-dot.online {
+            background: #55ff55;
+            box-shadow: 0 0 8px #55ff55;
             animation: pulse 2s infinite;
         }
 
-        .status-offline {
-            color: #f44336 !important;
-            font-weight: 600 !important;
+        .status-dot.offline {
+            background: #ff5555;
         }
 
-        .status-offline::before {
-            content: '●';
-            margin-right: 5px;
+        .status-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .player-count {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+        }
+
+        .player-count span {
+            color: #55ff55;
+            font-weight: 600;
+        }
+
+        #player-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        #player-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #player-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 30, 237, 0.5);
+            border-radius: 4px;
+        }
+
+        .player-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 8px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .player-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 30, 237, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .player-head {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .player-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .reopen-widget-btn {
@@ -255,9 +301,13 @@
 
         @media (max-width: 768px) {
             .server-widget {
-                width: 250px;
+                width: 280px;
                 top: 10px;
                 right: 10px;
+            }
+
+            #player-list {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -267,26 +317,20 @@
     <!-- ===== WIDGET DE STATUT SERVEUR ===== -->
     <div id="server-status-widget" class="server-widget">
         <div class="widget-header">
-            <h3>⚡ Statut Serveur</h3>
+            <h3>⚡ Daybreak SMP</h3>
             <button class="widget-close-btn" id="close-widget" aria-label="Fermer">&times;</button>
         </div>
         <div class="widget-content">
-            <div class="status-item">
-                <span class="label">État</span>
-                <span id="server-state" class="value status-online">En ligne</span>
+            <div class="status-header">
+                <span id="status-dot" class="status-dot offline"></span>
+                <span id="status-text" class="status-text">VÉRIFICATION...</span>
             </div>
-            <div class="status-item">
-                <span class="label">Joueurs</span>
-                <span id="player-count" class="value">0/20</span>
+
+            <div class="player-count">
+                Joueurs : <span id="player-count">-</span>
             </div>
-            <div class="status-item">
-                <span class="label">Version</span>
-                <span id="server-version" class="value">1.20.4</span>
-            </div>
-            <div class="status-item">
-                <span class="label">Ping</span>
-                <span id="server-ping" class="value">45ms</span>
-            </div>
+
+            <div id="player-list"></div>
         </div>
     </div>
 
@@ -1127,6 +1171,7 @@
         const closeBtn = document.getElementById('close-widget');
         const reopenBtn = document.getElementById('reopen-widget');
 
+        // ===== DRAG AND DROP =====
         header.addEventListener('mousedown', startDragging);
         document.addEventListener('mousemove', drag);
         document.addEventListener('mouseup', stopDragging);
@@ -1158,6 +1203,7 @@
             widget.classList.remove('dragging');
         }
 
+        // ===== FERMETURE/RÉOUVERTURE =====
         closeBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             closeWidget();
@@ -1187,6 +1233,7 @@
             localStorage.setItem('widgetVisible', 'true');
         }
 
+        // ===== SAUVEGARDE =====
         function savePosition(x, y) {
             localStorage.setItem('widgetX', x);
             localStorage.setItem('widgetY', y);
@@ -1211,27 +1258,47 @@
             }
         }
 
-        function updateServerStatus() {
-            fetch('https://api.mcsrvstat.us/2/votre-ip-serveur.com')
-                .then(response => response.json())
-                .then(data => {
-                    const stateElement = document.getElementById('server-state');
-                    const playersElement = document.getElementById('player-count');
-                    const versionElement = document.getElementById('server-version');
-                    if (data.online) {
-                        stateElement.textContent = 'En ligne';
-                        stateElement.className = 'value status-online';
-                        playersElement.textContent = `${data.players.online}/${data.players.max}`;
-                        if (data.version) versionElement.textContent = data.version;
-                    } else {
-                        stateElement.textContent = 'Hors ligne';
-                        stateElement.className = 'value status-offline';
-                        playersElement.textContent = '0/0';
+        // ===== MISE À JOUR STATUT (TON CODE) =====
+        async function updateServerStatus() {
+            try {
+                const res = await fetch('https://api.mcsrvstat.us/2/daybreaksmp.xyz:25110');
+                const data = await res.json();
+
+                const dot = document.getElementById('status-dot');
+                const text = document.getElementById('status-text');
+                const count = document.getElementById('player-count');
+                const list = document.getElementById('player-list');
+
+                if (data.online) {
+                    dot.className = "status-dot online";
+                    text.innerText = "SERVEUR ALLUMÉ";
+                    count.innerHTML = `<span>${data.players.online} / ${data.players.max}</span>`;
+
+                    list.innerHTML = "";
+                    if (data.players.list && data.players.list.length > 0) {
+                        data.players.list.forEach(name => {
+                            list.innerHTML += `
+                                <div class="player-item">
+                                    <img class="player-head" src="https://crafatar.com/avatars/${name}?size=24&overlay" alt="${name}">
+                                    <span class="player-name">${name}</span>
+                                </div>`;
+                        });
+                    } else if (data.players.online > 0) {
+                        list.innerHTML = "<div style='font-size:12px; color:#888; grid-column: 1/-1; text-align: center;'>Active le query pour voir les noms</div>";
                     }
-                })
-                .catch(error => console.error('Erreur statut:', error));
+                } else {
+                    dot.className = "status-dot offline";
+                    text.innerText = "SERVEUR ÉTEINT";
+                    count.innerHTML = "<span>0 / 0</span>";
+                    list.innerHTML = "";
+                }
+            } catch (e) { 
+                console.error("Erreur API statut serveur", e);
+                document.getElementById('status-text').innerText = "ERREUR CONNEXION";
+            }
         }
 
+        // ===== SUPPORT TACTILE =====
         header.addEventListener('touchstart', (e) => {
             if (e.target === closeBtn) return;
             const touch = e.touches[0];
@@ -1262,11 +1329,12 @@
             widget.classList.remove('dragging');
         });
 
+        // ===== INITIALISATION =====
         window.addEventListener('load', () => {
             restorePosition();
             restoreVisibility();
             updateServerStatus();
-            setInterval(updateServerStatus, 30000);
+            setInterval(updateServerStatus, 60000); // Mise à jour toutes les 60 secondes
         });
     </script>
 
