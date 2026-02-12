@@ -12,7 +12,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
-
+    
     <script>
         tailwind.config = {
             theme: {
@@ -20,6 +20,7 @@
                     colors: {
                         brand: '#FF1EED',
                         'brand-dark': '#b300a4',
+                        'brand-light': '#ff66f4',
                     },
                     fontFamily: {
                         display: ['Outfit', 'sans-serif'],
@@ -29,15 +30,20 @@
                         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'fade-in': 'fadeIn 0.5s ease-out forwards',
                         'float': 'float 6s ease-in-out infinite',
+                        'glow-pulse': 'glowPulse 4s ease-in-out infinite alternate',
                     },
                     keyframes: {
                         fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '0%': { opacity: '0', transform: 'translateY(15px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-10px)' },
+                        },
+                        glowPulse: {
+                            '0%': { opacity: '0.3', transform: 'scale(1)' },
+                            '100%': { opacity: '0.6', transform: 'scale(1.1)' },
                         }
                     }
                 }
@@ -50,76 +56,120 @@
             --brand-glow: rgba(255, 30, 237, 0.5); 
         }
         body { 
-            background-color: #000000;
+            background-color: #030005; /* Noir très légèrement teinté magenta */
             margin: 0;
-            color: white;
+            color: #ffffff;
             overflow-x: hidden;
             font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-
+        
         /* Utilitaires Custom */
         .reveal {
             opacity: 0;
-            transform: translateY(50px) scale(0.98);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(40px) scale(0.98);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0) scale(1);
         }
-
+        
         .glow-text {
-            text-shadow: 0 0 30px var(--brand-glow);
+            text-shadow: 0 0 40px var(--brand-glow), 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
+        /* Glassmorphism 2.0 - Plus élégant et profond */
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s ease;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
+        
         .glass-card:hover {
-            border-color: rgba(255, 30, 237, 0.5);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px -10px rgba(255, 30, 237, 0.15);
+            border-color: rgba(255, 30, 237, 0.4);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 40px -10px rgba(255, 30, 237, 0.25), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
         }
 
         .scroll-smooth { scroll-behavior: smooth; }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        
+        /* Scrollbar Premium */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #030005; }
+        ::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #FF1EED; }
+
+        /* Roadmap Line Gradient */
+        .roadmap-line {
+            background: linear-gradient(180deg, transparent, rgba(255, 30, 237, 0.4) 20%, rgba(255, 30, 237, 0.4) 80%, transparent);
+        }
+        @media (min-width: 1024px) {
+            .roadmap-line {
+                background: linear-gradient(90deg, transparent, rgba(255, 30, 237, 0.4) 20%, rgba(255, 30, 237, 0.4) 80%, transparent);
+            }
+        }
+
+        /* Ambient Background Glows */
+        .ambient-glow-1 {
+            position: fixed;
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(255,30,237,0.08) 0%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .ambient-glow-2 {
+            position: fixed;
+            bottom: -20%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(138,43,226,0.06) 0%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
 
         /* ===== WIDGET DE STATUT SERVEUR ===== */
         .server-widget {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 24px;
+            right: 24px;
             width: 320px;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(5, 0, 10, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border: 1px solid rgba(255, 30, 237, 0.3);
-            border-radius: 16px;
+            border-radius: 20px;
             z-index: 9999;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            box-shadow: 0 8px 32px rgba(255, 30, 237, 0.2);
+            transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
         .server-widget.dragging {
             cursor: move;
-            opacity: 0.9;
-            box-shadow: 0 12px 48px rgba(255, 30, 237, 0.4);
+            opacity: 0.95;
+            box-shadow: 0 20px 60px rgba(255, 30, 237, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
         }
 
         .server-widget.hidden {
             opacity: 0;
-            transform: scale(0.8);
+            transform: scale(0.9) translateY(-20px);
             pointer-events: none;
         }
 
@@ -127,11 +177,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px;
-            background: linear-gradient(135deg, #FF1EED, #b300a4);
-            border-radius: 16px 16px 0 0;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(255, 30, 237, 0.8), rgba(179, 0, 164, 0.8));
+            border-radius: 20px 20px 0 0;
             cursor: grab;
             user-select: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .widget-header:active {
@@ -142,30 +193,33 @@
             margin: 0;
             font-family: 'Outfit', sans-serif;
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 800;
+            letter-spacing: 0.5px;
             flex-grow: 1;
             color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .widget-close-btn {
-            background: transparent;
-            border: none;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: white;
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            line-height: 28px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             flex-shrink: 0;
         }
 
         .widget-close-btn:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: rotate(90deg);
+            transform: rotate(90deg) scale(1.1);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .widget-content {
@@ -175,91 +229,114 @@
         .status-header {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 15px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 10px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             display: inline-block;
+            position: relative;
         }
 
         .status-dot.online {
-            background: #55ff55;
-            box-shadow: 0 0 8px #55ff55;
-            animation: pulse 2s infinite;
+            background: #4ade80;
+            box-shadow: 0 0 12px #4ade80;
+        }
+        
+        .status-dot.online::after {
+            content: '';
+            position: absolute;
+            top: -4px; left: -4px; right: -4px; bottom: -4px;
+            border-radius: 50%;
+            border: 2px solid #4ade80;
+            animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+            opacity: 0.5;
         }
 
         .status-dot.offline {
-            background: #ff5555;
+            background: #f87171;
+            box-shadow: 0 0 12px #f87171;
         }
 
         .status-text {
             font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            color: #f4f4f5;
         }
 
         .player-count {
             font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 15px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #a1a1aa;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .player-count span {
-            color: #55ff55;
-            font-weight: 600;
+            color: #4ade80;
+            font-weight: 700;
+            font-size: 15px;
+            background: rgba(74, 222, 128, 0.1);
+            padding: 2px 8px;
+            border-radius: 12px;
+            border: 1px solid rgba(74, 222, 128, 0.2);
         }
 
         #player-list {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            max-height: 200px;
+            gap: 10px;
+            max-height: 220px;
             overflow-y: auto;
+            padding-right: 4px;
         }
 
-        #player-list::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        #player-list::-webkit-scrollbar-thumb {
-            background: rgba(255, 30, 237, 0.5);
-            border-radius: 4px;
-        }
+        #player-list::-webkit-scrollbar { width: 4px; }
+        #player-list::-webkit-scrollbar-track { background: transparent; }
+        #player-list::-webkit-scrollbar-thumb { background: rgba(255, 30, 237, 0.3); border-radius: 4px; }
 
         .player-item {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 6px 8px;
-            border-radius: 8px;
-            transition: all 0.2s;
+            background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            padding: 6px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .player-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 30, 237, 0.3);
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04));
+            border-color: rgba(255, 30, 237, 0.4);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         .player-head {
             width: 24px;
             height: 24px;
-            border-radius: 4px;
-            margin-right: 8px;
+            border-radius: 6px;
+            margin-right: 10px;
             flex-shrink: 0;
+            background-color: rgba(0,0,0,0.5);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .player-name {
             font-family: 'Inter', sans-serif;
-            font-size: 13px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #e4e4e7;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -267,58 +344,59 @@
 
         .reopen-widget-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 24px;
+            right: 24px;
             padding: 14px 24px;
             background: linear-gradient(135deg, #FF1EED, #b300a4);
             color: white;
-            border: none;
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 30px;
             cursor: pointer;
             font-family: 'Inter', sans-serif;
             font-size: 14px;
-            font-weight: 600;
-            box-shadow: 0 4px 20px rgba(255, 30, 237, 0.4);
+            font-weight: 700;
+            box-shadow: 0 8px 24px rgba(255, 30, 237, 0.4);
             z-index: 9998;
-            transition: all 0.3s ease;
-            animation: pulse-glow 2s infinite;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .reopen-widget-btn:hover {
-            background: linear-gradient(135deg, #b300a4, #FF1EED);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(255, 30, 237, 0.6);
-        }
-
-        @keyframes pulse-glow {
-            0%, 100% {
-                box-shadow: 0 4px 20px rgba(255, 30, 237, 0.4);
-            }
-            50% {
-                box-shadow: 0 4px 30px rgba(255, 30, 237, 0.7);
-            }
+            background: linear-gradient(135deg, #ff4df2, #d600c4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 32px rgba(255, 30, 237, 0.6);
         }
 
         @media (max-width: 768px) {
             .server-widget {
-                width: 280px;
-                top: 10px;
-                right: 10px;
+                width: calc(100% - 32px);
+                top: 16px;
+                right: 16px;
+                left: 16px;
             }
-
-            #player-list {
-                grid-template-columns: 1fr;
-            }
+            #player-list { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            #player-list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
-<body class="scroll-smooth">
+<body class="scroll-smooth antialiased">
+    <!-- Ambiances lumineuses -->
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+
+    <div id="root"></div>
 
     <!-- ===== WIDGET DE STATUT SERVEUR ===== -->
     <div id="server-status-widget" class="server-widget">
         <div class="widget-header">
             <h3>⚡ Daybreak SMP</h3>
-            <button class="widget-close-btn" id="close-widget" aria-label="Fermer">&times;</button>
+            <button class="widget-close-btn" id="close-widget" aria-label="Fermer">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
         </div>
         <div class="widget-content">
             <div class="status-header">
@@ -327,7 +405,7 @@
             </div>
 
             <div class="player-count">
-                Joueurs : <span id="player-count">-</span>
+                En ligne <span id="player-count">-</span>
             </div>
 
             <div id="player-list"></div>
@@ -336,118 +414,9 @@
 
     <!-- Bouton pour réafficher le widget -->
     <button id="reopen-widget" class="reopen-widget-btn" style="display: none;">
-        📊 Statut Serveur
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+        Statut Serveur
     </button>
-
-"fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daybreak | Serveur Minecraft Communautaire</title>
-    <!-- Chargement de Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chargement de React et Babel pour le JSX -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: '#FF1EED',
-                        'brand-dark': '#b300a4',
-                    },
-                    fontFamily: {
-                        display: ['Outfit', 'sans-serif'],
-                        body: ['Inter', 'sans-serif'],
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'fade-in': 'fadeIn 0.5s ease-out forwards',
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        :root {
-            --brand-glow: rgba(255, 30, 237, 0.5); 
-        }
-        body { 
-            background-color: #000000; /* Noir pur */
-            margin: 0;
-            color: white;
-            overflow-x: hidden;
-            font-size: 16px;
-        }
-        
-        /* Utilitaires Custom */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px) scale(0.98);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        
-        .glow-text {
-            text-shadow: 0 0 30px var(--brand-glow);
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s ease;
-        }
-        
-        .glass-card:hover {
-            border-color: rgba(255, 30, 237, 0.5);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px -10px rgba(255, 30, 237, 0.15);
-        }
-
-        .scroll-smooth { scroll-behavior: smooth; }
-        
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #FF1EED; }
-
-        /* Roadmap Line Gradient */
-        .roadmap-line {
-            background: linear-gradient(180deg, transparent, rgba(255, 30, 237, 0.3) 20%, rgba(255, 30, 237, 0.3) 80%, transparent);
-        }
-        @media (min-width: 1024px) {
-            .roadmap-line {
-                background: linear-gradient(90deg, transparent, rgba(255, 30, 237, 0.3) 20%, rgba(255, 30, 237, 0.3) 80%, transparent);
-            }
-        }
-    </style>
-</head>
-<body class="scroll-smooth antialiased">
-    <div id="root"></div>
 
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
@@ -521,7 +490,7 @@
                 let height = window.innerHeight;
                 
                 const stars = [];
-                const numStars = 400;
+                const numStars = 350;
 
                 const resize = () => {
                     width = window.innerWidth;
@@ -534,15 +503,15 @@
                     constructor() {
                         this.x = Math.random() * width;
                         this.y = Math.random() * height; 
-                        this.size = Math.random() * 1.3 + 0.1; 
+                        this.size = Math.random() * 1.5 + 0.1; 
                         this.opacity = Math.random(); 
                         this.fade = Math.random() * 0.003 + 0.0005; 
                         this.direction = Math.random() > 0.5 ? 1 : -1;
                     }
                     update() {
                         this.opacity += this.fade * this.direction;
-                        if (this.opacity >= 0.8) {
-                            this.opacity = 0.8;
+                        if (this.opacity >= 0.7) {
+                            this.opacity = 0.7;
                             this.direction = -1;
                         } else if (this.opacity <= 0.1) {
                             this.opacity = 0.1;
@@ -578,133 +547,47 @@
             return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none" />;
         };
 
-        // --- Composant Statut du Serveur ---
-        const ServerStatus = () => {
-            const [status, setStatus] = useState({
-                loading: true,
-                online: false,
-                playersOnline: 0,
-                maxPlayers: 0,
-                playerList: []
-            });
-
-            const fetchStatus = async () => {
-                try {
-                    const res = await fetch('https://api.mcsrvstat.us/2/daybreaksmp.xyz:25110');
-                    const data = await res.json();
-                    
-                    setStatus({
-                        loading: false,
-                        online: data.online,
-                        playersOnline: data.players?.online || 0,
-                        maxPlayers: data.players?.max || 0,
-                        playerList: data.players?.list || []
-                    });
-                } catch (error) {
-                    console.error("Erreur API de statut Minecraft", error);
-                    setStatus(prev => ({ ...prev, loading: false, online: false }));
-                }
-            };
-
-            useEffect(() => {
-                fetchStatus();
-                // Actualisation toutes les 60 secondes
-                const interval = setInterval(fetchStatus, 60000);
-                return () => clearInterval(interval);
-            }, []);
-
-            return (
-                <div className="mt-12 w-full max-w-3xl mx-auto glass-card p-6 md:p-8 rounded-2xl border border-white/5 relative overflow-hidden group">
-                    {/* Effet lumineux de fond selon le statut */}
-                    <div className={`absolute -top-20 -right-20 w-48 h-48 rounded-full blur-[80px] opacity-20 transition-colors duration-1000 ${status.online ? 'bg-[#55ff55]' : 'bg-[#ff5555]'}`}></div>
-                    
-                    <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                        <div className="flex items-start gap-4">
-                            <div className="mt-1">
-                                <span className="relative flex h-4 w-4">
-                                    {status.online && <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#55ff55] opacity-75"></span>}
-                                    <span className={`relative inline-flex rounded-full h-4 w-4 ${status.loading ? 'bg-gray-500' : (status.online ? 'bg-[#55ff55] shadow-[0_0_10px_#55ff55]' : 'bg-[#ff5555]')}`}></span>
-                                </span>
-                            </div>
-                            <div>
-                                <h3 className="font-display font-black text-xl md:text-2xl text-white uppercase italic tracking-wide flex items-center gap-2">
-                                    <Icons.Server className="w-5 h-5 opacity-50" />
-                                    Serveur Principal (Survie)
-                                </h3>
-                                <p className="text-white/50 text-sm font-medium mt-1">
-                                    {status.loading ? 'Vérification en cours...' : (status.online ? 'En ligne et prêt !' : 'Actuellement hors ligne')}
-                                </p>
-                            </div>
-                        </div>
-
-                        {status.online && (
-                            <div className="bg-black/50 border border-white/10 px-5 py-3 rounded-xl flex items-center gap-3">
-                                <span className="text-xs font-bold text-white/50 uppercase tracking-widest">Joueurs</span>
-                                <span className="text-lg font-black text-white">
-                                    <span className="text-[#55ff55]">{status.playersOnline}</span> / {status.maxPlayers}
-                                </span>
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Liste des joueurs */}
-                    {status.online && status.playersOnline > 0 && (
-                        <div className="relative z-10 mt-6 pt-6 border-t border-white/5">
-                            {status.playerList && status.playerList.length > 0 ? (
-                                <div className="flex flex-wrap gap-3">
-                                    {status.playerList.map(name => (
-                                        <div key={name} className="flex items-center gap-2 bg-[#1a1a1a] border border-white/5 rounded-lg pr-3 p-1.5 hover:bg-white/5 hover:border-brand/30 transition-all transform hover:-translate-y-0.5">
-                                            <img src={`https://crafatar.com/avatars/${name}?size=24&overlay`} alt={name} className="w-6 h-6 rounded bg-black" />
-                                            <span className="text-sm font-medium text-white/80">{name}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-white/30 text-xs italic bg-black/30 p-3 rounded-lg border border-white/5">
-                                    Désactivez la protection des noms via Velocity (query) pour voir la liste des joueurs connectés.
-                                </p>
-                            )}
-                        </div>
-                    )}
-                </div>
-            );
-        };
-
         // --- Modale Crédits ---
         const CreditsModal = ({ isOpen, onClose }) => {
             if (!isOpen) return null;
             return (
                 <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 animate-fade-in">
-                    <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose}></div>
-                    <div className="bg-[#0A0A0A] w-full max-w-lg rounded-3xl border border-white/10 shadow-[0_0_50px_rgba(255,30,237,0.1)] flex flex-col relative z-10 overflow-hidden max-h-[80vh]">
-                        <div className="flex justify-between items-center p-6 border-b border-white/5">
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={onClose}></div>
+                    <div className="bg-[#0A0A0A] w-full max-w-lg rounded-3xl border border-white/10 shadow-[0_20px_60px_rgba(255,30,237,0.15)] flex flex-col relative z-10 overflow-hidden max-h-[85vh]">
+                        <div className="flex justify-between items-center p-6 border-b border-white/5 bg-white/[0.02]">
                             <h3 className="text-xl font-display font-bold text-white flex items-center gap-3">
                                 <Icons.Info className="w-6 h-6 text-brand" />
                                 <span>Crédits & Ressources</span>
                             </h3>
-                            <button onClick={onClose} className="text-white/50 hover:text-white transition-colors">
-                                <Icons.Close className="w-6 h-6" />
+                            <button onClick={onClose} className="text-white/40 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-full transition-all">
+                                <Icons.Close className="w-5 h-5" />
                             </button>
                         </div>
                         <div className="p-8 overflow-y-auto">
-                            <div className="space-y-6">
+                            <div className="space-y-8">
                                 <div>
-                                    <h4 className="text-brand text-xs font-bold uppercase tracking-widest mb-3">Mods Principaux</h4>
-                                    <ul className="space-y-2 text-sm text-white/70">
-                                        <li className="flex items-center gap-2"><span className="w-1 h-1 bg-brand rounded-full"></span>Plasmo Voice (Chat vocal de proximité)</li>
-                                        <li className="flex items-center gap-2"><span className="w-1 h-1 bg-brand rounded-full"></span>Sodium & Iris (Optimisation graphique)</li>
-                                        <li className="flex items-center gap-2"><span className="w-1 h-1 bg-brand rounded-full"></span>Xaero's World Map</li>
+                                    <h4 className="text-brand text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+                                        <span className="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+                                        Mods Principaux
+                                    </h4>
+                                    <ul className="space-y-3 text-sm text-white/70 font-medium">
+                                        <li className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5"><span className="w-1.5 h-1.5 bg-white/30 rounded-full"></span>Plasmo Voice (Chat vocal de proximité)</li>
+                                        <li className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5"><span className="w-1.5 h-1.5 bg-white/30 rounded-full"></span>Sodium & Iris (Optimisation graphique)</li>
+                                        <li className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5"><span className="w-1.5 h-1.5 bg-white/30 rounded-full"></span>Xaero's World Map</li>
                                     </ul>
                                 </div>
                                 <div>
-                                    <h4 className="text-brand text-xs font-bold uppercase tracking-widest mb-3">Esthétique</h4>
-                                    <ul className="space-y-2 text-sm text-white/70">
-                                        <li className="flex items-center gap-2"><span className="w-1 h-1 bg-brand rounded-full"></span>Complementary Shaders Reimagined</li>
-                                        <li className="flex items-center gap-2"><span className="w-1 h-1 bg-brand rounded-full"></span>Fresh Animations</li>
-                                        <li className="flex items-center gap-2"><span className="w-1 h-1 bg-brand rounded-full"></span>Stay True Resource Pack</li>
+                                    <h4 className="text-brand text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+                                        <span className="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+                                        Esthétique
+                                    </h4>
+                                    <ul className="space-y-3 text-sm text-white/70 font-medium">
+                                        <li className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5"><span className="w-1.5 h-1.5 bg-white/30 rounded-full"></span>Complementary Shaders Reimagined</li>
+                                        <li className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5"><span className="w-1.5 h-1.5 bg-white/30 rounded-full"></span>Fresh Animations</li>
+                                        <li className="flex items-center gap-3 bg-white/5 p-3 rounded-xl border border-white/5"><span className="w-1.5 h-1.5 bg-white/30 rounded-full"></span>Stay True Resource Pack</li>
                                     </ul>
                                 </div>
-                                <div className="pt-4 border-t border-white/5 text-xs text-white/30 italic">
+                                <div className="pt-6 border-t border-white/10 text-xs text-white/40 italic text-center">
                                     Daybreak n'est pas affilié aux créateurs de ces mods. Tous les crédits reviennent à leurs auteurs respectifs.
                                 </div>
                             </div>
@@ -721,15 +604,17 @@
             const [creditsOpen, setCreditsOpen] = useState(false);
             const [activeFaq, setActiveFaq] = useState(null);
 
+            const navItems = ['Accueil', 'Modes de jeu', 'Philosophie', 'Ressources', 'Support', 'Feuille de route', 'Nous rejoindre'];
+
             useEffect(() => {
                 const handleScroll = () => setScrolled(window.scrollY > 20);
-                window.addEventListener('scroll', handleScroll);
+                window.addEventListener('scroll', handleScroll, { passive: true });
                 
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) entry.target.classList.add('active');
                     });
-                }, { threshold: 0.1 });
+                }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
 
                 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
                 return () => {
@@ -738,11 +623,23 @@
                 };
             }, []);
 
-            const scrollToSection = (id) => {
+            const scrollToSection = (item) => {
                 setMobileMenuOpen(false);
-                const element = document.getElementById(id);
+                const idMap = {
+                    'Accueil': 'accueil',
+                    'Modes de jeu': 'modes-de-jeu',
+                    'Philosophie': 'philosophie',
+                    'Ressources': 'ressources',
+                    'Support': 'support',
+                    'Feuille de route': 'feuille-de-route',
+                    'Nous rejoindre': 'rejoindre'
+                };
+                
+                const elementId = idMap[item];
+                const element = document.getElementById(elementId);
+                
                 if (element) {
-                    const offset = 80;
+                    const offset = 100; // Un peu plus d'espace pour le header fixe
                     window.scrollTo({
                         top: element.offsetTop - offset,
                         behavior: 'smooth'
@@ -754,7 +651,7 @@
                 const ipFull = "daybreaksmp.xyz:25053";
                 navigator.clipboard.writeText(ipFull);
                 setCopied(true);
-                setTimeout(() => setCopied(false), 2000);
+                setTimeout(() => setCopied(false), 2500);
             };
 
             const roadmap = [
@@ -776,158 +673,161 @@
                     date: "Été 2026", 
                     label: "EXPANSION", 
                     status: "BLOQUÉ", 
-                    desc: "Accès refusé. Niveau d'accréditation insuffisant.",
+                    desc: "Accès refusé. Niveau d'accréditation insuffisant. De nouveaux territoires attendent d'être découverts.",
                     active: false
                 }
             ];
 
             const faqs = [
-                { q: "Quelle version pour rejoindre ?", a: "Le serveur tourne sur Minecraft Java Edition 1.20.4. Assurez-vous d'avoir la bonne version dans votre launcher." },
-                { q: "Les versions crackées sont-elles acceptées ?", a: "Oui, nous acceptons les versions crackées (SkinRestorer inclus) pour permettre à tous de jouer, mais nous recommandons l'achat du jeu officiel pour la sécurité." },
-                { q: "Comment voir la map ?", a: "Une carte interactive (BlueMap) est disponible directement sur ce site via le bouton 'Carte en Direct' ou en jeu avec la commande /map." }
+                { q: "Quelle version pour rejoindre ?", a: "Le serveur tourne sur Minecraft Java Edition 1.20.4. Assurez-vous d'avoir la bonne version sélectionnée dans votre launcher." },
+                { q: "Les versions crackées sont-elles acceptées ?", a: "Oui, nous acceptons les versions crackées (SkinRestorer inclus) pour permettre à tous de jouer. Cependant, nous recommandons l'achat du jeu officiel pour des raisons de sécurité." },
+                { q: "Comment voir la map globale ?", a: "Une carte interactive (BlueMap) est disponible. Cliquez sur le bouton 'Carte en Direct' sur l'accueil, ou tapez la commande /map directement en jeu." }
             ];
 
             return (
-                <div className="min-h-screen bg-black text-white flex flex-col items-center relative overflow-hidden">
+                <div className="min-h-screen text-white flex flex-col items-center relative overflow-hidden font-body selection:bg-brand/30 selection:text-white">
                     <StarBackground />
                     <CreditsModal isOpen={creditsOpen} onClose={() => setCreditsOpen(false)} />
 
                     {/* Navigation */}
-                    <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'bg-black/80 backdrop-blur-xl border-b border-white/5 py-4' : 'bg-transparent py-6'}`}>
+                    <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'bg-black/70 backdrop-blur-xl border-b border-white/10 py-4 shadow-lg shadow-black/50' : 'bg-transparent py-6'}`}>
                         <div className="max-w-7xl mx-auto px-6 lg:px-10 flex justify-between items-center w-full">
-                            <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => scrollToSection('accueil')}>
-                                <div className="w-10 h-10 bg-brand rounded-lg flex items-center justify-center font-black italic shadow-[0_0_20px_rgba(255,30,237,0.3)] text-white text-xl transform group-hover:rotate-6 transition-transform">D</div>
-                                <span className="text-2xl font-display font-black tracking-tighter uppercase italic bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">Daybreak</span>
+                            <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => scrollToSection('Accueil')}>
+                                <div className="w-10 h-10 bg-gradient-to-br from-brand to-brand-dark rounded-xl flex items-center justify-center font-black italic shadow-[0_0_20px_rgba(255,30,237,0.4)] text-white text-xl transform group-hover:rotate-6 group-hover:scale-110 transition-all duration-300">D</div>
+                                <span className="text-2xl font-display font-black tracking-tighter uppercase italic text-gradient">Daybreak</span>
                             </div>
                             
                             {/* Desktop Menu */}
-                            <ul className="hidden md:flex space-x-12 text-[11px] font-bold uppercase tracking-[0.2em] text-white/60">
-                                {['Accueil', 'Serveurs', 'Ressources', 'Roadmap', 'FAQ', 'Histoire'].map((item) => (
-                                    <li key={item} onClick={() => scrollToSection(item === 'Accueil' ? 'accueil' : (item === 'Serveurs' ? 'serveurs' : item === 'Ressources' ? 'ressources' : item === 'Histoire' ? 'origine' : item === 'Roadmap' ? 'calendrier' : 'faq'))} className="hover:text-brand cursor-pointer transition-colors relative group">
-                                            {item}
-                                            <span className="absolute -bottom-2 left-1/2 w-0 h-[2px] bg-brand transition-all group-hover:w-full group-hover:left-0"></span>
+                            <ul className="hidden lg:flex space-x-8 text-[11px] font-bold uppercase tracking-[0.2em] text-white/60">
+                                {navItems.map((item) => (
+                                    <li key={item} onClick={() => scrollToSection(item)} className="hover:text-white cursor-pointer transition-colors relative group whitespace-nowrap">
+                                        {item}
+                                        <span className="absolute -bottom-2 left-1/2 w-0 h-[2px] bg-brand transition-all duration-300 group-hover:w-full group-hover:left-0 opacity-0 group-hover:opacity-100"></span>
                                     </li>
                                 ))}
                             </ul>
 
                             {/* Mobile Toggle */}
-                            <button className="md:hidden text-white p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-                                {mobileMenuOpen ? <Icons.Close className="w-6 h-6" /> : <Icons.Menu className="w-6 h-6" />}
+                            <button className="lg:hidden text-white p-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+                                {mobileMenuOpen ? <Icons.Close className="w-5 h-5" /> : <Icons.Menu className="w-5 h-5" />}
                             </button>
                         </div>
 
                         {/* Mobile Menu Content */}
-                        <div className={`md:hidden absolute top-full left-0 w-full bg-black/95 border-b border-white/10 backdrop-blur-2xl transition-all duration-300 overflow-hidden ${mobileMenuOpen ? 'max-h-96 py-8' : 'max-h-0 py-0'}`}>
-                            <ul className="flex flex-col items-center space-y-6 text-sm font-bold uppercase tracking-widest text-white/80">
-                                {['Accueil', 'Serveurs', 'Ressources', 'Roadmap', 'FAQ', 'Histoire'].map((item) => (
-                                    <li key={item} onClick={() => scrollToSection(item === 'Accueil' ? 'accueil' : (item === 'Serveurs' ? 'serveurs' : item === 'Ressources' ? 'ressources' : item === 'Histoire' ? 'origine' : item === 'Roadmap' ? 'calendrier' : 'faq'))}>
-                                        {item}
+                        <div className={`lg:hidden absolute top-full left-0 w-full bg-[#05000A]/95 border-b border-white/10 backdrop-blur-2xl transition-all duration-400 ease-in-out overflow-hidden shadow-2xl ${mobileMenuOpen ? 'max-h-[500px] py-6 opacity-100' : 'max-h-0 py-0 opacity-0'}`}>
+                            <ul className="flex flex-col items-center space-y-2 px-4">
+                                {navItems.map((item) => (
+                                    <li key={item} onClick={() => scrollToSection(item)} className="w-full text-center">
+                                        <div className="block py-4 text-sm font-bold uppercase tracking-widest text-white/80 hover:text-brand hover:bg-white/5 rounded-xl cursor-pointer transition-all">
+                                            {item}
+                                        </div>
                                     </li>
                                 ))}
                             </ul>
                         </div>
                     </nav>
 
-                    {/* Hero Section */}
+                    {/* 1. Hero Section (Accueil) */}
                     <section id="accueil" className="relative flex flex-col items-center justify-center text-center w-full min-h-screen px-6 py-24 z-10 pt-32">
                         <div className="reveal w-full max-w-7xl flex flex-col items-center">
-                            <div className="inline-block px-4 py-1.5 rounded-full border border-brand/30 bg-brand/10 text-brand text-[10px] font-bold uppercase tracking-[0.3em] mb-8 animate-pulse-slow">
+                            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-brand/30 bg-brand/10 text-brand text-[10px] font-bold uppercase tracking-[0.3em] mb-10 shadow-[0_0_20px_rgba(255,30,237,0.15)] animate-pulse-slow">
+                                <span className="w-2 h-2 rounded-full bg-brand"></span>
                                 Saison 1 Disponible
                             </div>
-                            <h1 className="font-display font-black uppercase tracking-tighter italic text-white glow-text text-center mb-8 px-4 text-7xl md:text-9xl leading-[0.9]">
+                            
+                            <h1 className="font-display font-black uppercase tracking-tighter italic glow-text text-center mb-6 px-4 text-7xl md:text-8xl lg:text-[10rem] leading-[0.85] text-gradient">
                                 DAYBREAK
                             </h1>
-                            <p className="text-white/50 text-lg md:text-2xl max-w-3xl mb-12 font-medium leading-relaxed text-center px-4">
+                            
+                            <p className="text-white/60 text-lg md:text-2xl max-w-2xl mb-14 font-medium leading-relaxed text-center px-4">
                                 Plus qu'un simple serveur Minecraft. <br className="hidden md:block"/>
-                                Une aventure survie authentique, rythmée par le <span className="text-brand font-bold">Ramadan</span> et le <span className="text-brand font-bold">Carnaval</span>.
+                                Une aventure survie authentique, rythmée par le <span className="text-brand font-bold drop-shadow-[0_0_10px_rgba(255,30,237,0.5)]">Ramadan</span> et le <span className="text-brand font-bold drop-shadow-[0_0_10px_rgba(255,30,237,0.5)]">Carnaval</span>.
                             </p>
                             
-                            <div className="flex flex-col md:flex-row items-center gap-6 w-full justify-center">
+                            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto justify-center max-w-md sm:max-w-none mx-auto">
                                 {/* IP Card */}
-                                <div onClick={copyIp} className="group relative cursor-pointer w-full md:w-auto">
-                                    <div className="absolute -inset-1 bg-gradient-to-r from-brand to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-60 transition duration-500"></div>
-                                    <div className="relative bg-[#0A0A0A] border border-white/10 px-8 py-6 rounded-xl flex items-center justify-between space-x-8 hover:bg-[#111] transition-colors">
+                                <div onClick={copyIp} className="group relative cursor-pointer w-full sm:w-auto flex-1">
+                                    <div className="absolute -inset-1 bg-gradient-to-r from-brand to-brand-dark rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+                                    <div className="relative bg-[#0A0A0A] border border-white/10 px-6 sm:px-8 py-4 sm:py-5 rounded-xl flex items-center justify-between space-x-6 hover:bg-[#151515] transition-all h-full transform group-hover:-translate-y-1">
                                         <div className="flex flex-col items-start text-left">
-                                            <span className="text-[9px] text-white/40 uppercase font-bold tracking-[0.3em] mb-1">IP du Serveur</span>
-                                            <span className="text-xl md:text-2xl font-display font-black tracking-wider text-white">DAYBREAKSMP.XYZ</span>
+                                            <span className="text-[9px] text-brand uppercase font-bold tracking-[0.3em] mb-1 transition-colors">{copied ? 'IP COPIÉE !' : 'IP DU SERVEUR'}</span>
+                                            <span className="text-lg sm:text-xl font-display font-black tracking-wider text-white">DAYBREAKSMP.XYZ</span>
                                         </div>
-                                        <div className="text-brand p-3 bg-white/5 rounded-lg group-hover:bg-brand group-hover:text-white transition-all">
+                                        <div className={`p-3 rounded-lg transition-all duration-300 ${copied ? 'bg-green-500/20 text-green-400' : 'bg-white/5 text-white/50 group-hover:bg-brand group-hover:text-white shadow-lg'}`}>
                                             {copied ? <Icons.Check className="w-5 h-5" /> : <Icons.Copy className="w-5 h-5" />}
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* Map Button - Ouvre désormais directement dans un nouvel onglet pour contourner le HTTPS block */}
-                                <a href="http://5.255.86.105:25077" target="_blank" rel="noopener noreferrer" className="group relative w-full md:w-auto block">
-                                    <div className="absolute -inset-1 bg-white rounded-2xl blur opacity-10 group-hover:opacity-30 transition duration-500"></div>
-                                    <div className="relative bg-white/5 border border-white/10 px-8 py-6 rounded-xl flex items-center justify-center space-x-4 hover:bg-white/10 transition-colors h-full">
-                                        <Icons.Map className="w-5 h-5 text-brand" />
-                                        <span className="font-bold text-white uppercase tracking-widest text-sm">Carte en direct</span>
+                                {/* Map Button */}
+                                <a href="http://5.255.86.105:25077" target="_blank" rel="noopener noreferrer" className="group relative w-full sm:w-auto flex-1 block">
+                                    <div className="absolute -inset-1 bg-white rounded-2xl blur opacity-10 group-hover:opacity-20 transition duration-500"></div>
+                                    <div className="relative bg-white/5 border border-white/10 px-6 sm:px-8 py-4 sm:py-5 rounded-xl flex items-center justify-center space-x-3 hover:bg-white/10 transition-all h-full transform group-hover:-translate-y-1">
+                                        <Icons.Map className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
+                                        <span className="font-bold text-white/90 group-hover:text-white uppercase tracking-widest text-sm">Carte en direct</span>
                                     </div>
                                 </a>
                             </div>
-
-                            {/* Statut du Serveur */}
-                            <ServerStatus />
                         </div>
                     </section>
 
-                    {/* Servers Section */}
-                    <section id="serveurs" className="w-full py-32 px-6 relative z-10 flex flex-col items-center">
+                    {/* 2. Modes de jeu Section */}
+                    <section id="modes-de-jeu" className="w-full py-32 px-6 relative z-10 flex flex-col items-center">
                         <div className="w-full max-w-7xl flex flex-col items-center">
                             <div className="reveal text-center mb-20">
                                 <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Modes de jeu</span>
-                                <h2 className="text-4xl md:text-6xl font-display font-black uppercase tracking-tighter italic text-white">3 Serveurs Inédits</h2>
+                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white drop-shadow-xl">3 Serveurs Inédits</h2>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
-                                {/* Survie Lifesteal */}
-                                <div className="reveal glass-card p-8 rounded-3xl relative overflow-hidden group hover:border-red-500/50">
-                                    <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                                        <Icons.Sword className="w-32 h-32 text-red-500 transform rotate-12" />
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
+                                {/* Aereset */}
+                                <div className="reveal glass-card p-8 lg:p-10 rounded-3xl relative overflow-hidden group hover:border-purple-500/40">
+                                    <div className="absolute -top-10 -right-10 p-6 opacity-5 group-hover:opacity-10 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110">
+                                        <Icons.Skull className="w-64 h-64 text-purple-500" />
                                     </div>
                                     <div className="relative z-10 h-full flex flex-col">
-                                        <div className="w-14 h-14 rounded-2xl bg-red-500/10 flex items-center justify-center mb-6 border border-red-500/20 group-hover:scale-110 transition-transform">
-                                            <Icons.Sword className="w-7 h-7 text-red-500" />
+                                        <div className="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-8 border border-purple-500/20 group-hover:scale-110 group-hover:bg-purple-500/20 transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                                            <Icons.Skull className="w-7 h-7 text-purple-400" />
                                         </div>
-                                        <h3 className="text-2xl font-display font-black italic uppercase mb-4 text-white">Survie Lifesteal</h3>
-                                        <p className="text-white/60 text-sm leading-relaxed flex-grow">
-                                            Affrontez les éléments et les autres joueurs ! Gagnez des cœurs en éliminant vos adversaires (Vol de vie). Explorez une map remplie de <strong className="text-white">structures customs</strong> et équipez-vous d'<strong className="text-white">armes rares</strong> exclusives.
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <h3 className="text-2xl lg:text-3xl font-display font-black italic uppercase text-white">Aereset</h3>
+                                            <span className="bg-purple-500/20 border border-purple-500/30 text-purple-300 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(168,85,247,0.2)]">Hardcore</span>
+                                        </div>
+                                        <p className="text-white/60 text-sm lg:text-base leading-relaxed flex-grow">
+                                            Notre version du défi extrême. Objectif : Tuer l'Ender Dragon. <strong className="text-purple-300">Attention : si vous mourez, la map est intégralement réinitialisée !</strong> Jouable en solo ou en coopération.
                                         </p>
                                     </div>
                                 </div>
 
-                                {/* Aereset */}
-                                <div className="reveal glass-card p-8 rounded-3xl relative overflow-hidden group hover:border-purple-500/50" style={{transitionDelay: '100ms'}}>
-                                    <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                                        <Icons.Skull className="w-32 h-32 text-purple-500 transform -rotate-12" />
+                                {/* Survie Lifesteal (Centre) */}
+                                <div className="reveal glass-card p-8 lg:p-10 rounded-3xl relative overflow-hidden group hover:border-brand/40" style={{transitionDelay: '150ms'}}>
+                                    <div className="absolute inset-0 bg-gradient-to-b from-brand/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <div className="absolute -top-10 -right-10 p-6 opacity-5 group-hover:opacity-10 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110">
+                                        <Icons.Sword className="w-64 h-64 text-brand" />
                                     </div>
                                     <div className="relative z-10 h-full flex flex-col">
-                                        <div className="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center mb-6 border border-purple-500/20 group-hover:scale-110 transition-transform">
-                                            <Icons.Skull className="w-7 h-7 text-purple-500" />
+                                        <div className="w-14 h-14 rounded-2xl bg-brand/10 flex items-center justify-center mb-8 border border-brand/20 group-hover:scale-110 group-hover:bg-brand/20 transition-all duration-300 shadow-[0_0_15px_rgba(255,30,237,0.2)]">
+                                            <Icons.Sword className="w-7 h-7 text-brand" />
                                         </div>
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <h3 className="text-2xl font-display font-black italic uppercase text-white">Aereset</h3>
-                                            <span className="bg-purple-500/20 text-purple-400 text-[9px] font-bold uppercase px-2 py-1 rounded">Hardcore</span>
-                                        </div>
-                                        <p className="text-white/60 text-sm leading-relaxed flex-grow">
-                                            Notre version du défi de Kai Cenat/botkz. Objectif : Tuer l'Ender Dragon. <strong className="text-purple-400">Attention : si vous mourez, la map est intégralement réinitialisée !</strong> Jouable en solo ou en coopération pour plus de fun (et de stress).
+                                        <h3 className="text-2xl lg:text-3xl font-display font-black italic uppercase mb-4 text-white">Survie Lifesteal</h3>
+                                        <p className="text-white/60 text-sm lg:text-base leading-relaxed flex-grow">
+                                            Affrontez les éléments et les autres joueurs ! Gagnez des cœurs en éliminant vos adversaires. Explorez une map remplie de <strong className="text-white">structures customs</strong> et équipez-vous d'<strong className="text-white">armes rares</strong>.
                                         </p>
                                     </div>
                                 </div>
 
                                 {/* Mini-jeux */}
-                                <div className="reveal glass-card p-8 rounded-3xl relative overflow-hidden group hover:border-blue-500/50" style={{transitionDelay: '200ms'}}>
-                                    <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
-                                        <Icons.Gamepad className="w-32 h-32 text-blue-500 transform rotate-6" />
+                                <div className="reveal glass-card p-8 lg:p-10 rounded-3xl relative overflow-hidden group hover:border-blue-500/40" style={{transitionDelay: '300ms'}}>
+                                    <div className="absolute -top-10 -right-10 p-6 opacity-5 group-hover:opacity-10 transition-all duration-500 group-hover:rotate-12 group-hover:scale-110">
+                                        <Icons.Gamepad className="w-64 h-64 text-blue-500" />
                                     </div>
                                     <div className="relative z-10 h-full flex flex-col">
-                                        <div className="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6 border border-blue-500/20 group-hover:scale-110 transition-transform">
-                                            <Icons.Gamepad className="w-7 h-7 text-blue-500" />
+                                        <div className="w-14 h-14 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-8 border border-blue-500/20 group-hover:scale-110 group-hover:bg-blue-500/20 transition-all duration-300 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                                            <Icons.Gamepad className="w-7 h-7 text-blue-400" />
                                         </div>
-                                        <h3 className="text-2xl font-display font-black italic uppercase mb-4 text-white">Mini-Jeux</h3>
-                                        <p className="text-white/60 text-sm leading-relaxed flex-grow">
-                                            Rejoignez nos soirées communautaires : <strong className="text-white">Bedwars, Buildbattle, Maps Horreur</strong> et bien plus ! L'agenda est dispo sur Discord. Jouez avec vos amis et n'hésitez pas à nous proposer vos propres maps !
+                                        <h3 className="text-2xl lg:text-3xl font-display font-black italic uppercase mb-4 text-white">Mini-Jeux</h3>
+                                        <p className="text-white/60 text-sm lg:text-base leading-relaxed flex-grow">
+                                            Rejoignez nos soirées communautaires : <strong className="text-white">Bedwars, Buildbattle, Maps Horreur</strong> et bien plus ! L'agenda est dispo sur Discord. Jouez avec vos amis.
                                         </p>
                                     </div>
                                 </div>
@@ -935,27 +835,50 @@
                         </div>
                     </section>
 
-                    {/* Resources Section */}
-                    <section id="ressources" className="w-full py-32 px-6 relative z-10 flex flex-col items-center bg-gradient-to-b from-black to-[#080808]">
+                    {/* 3. Philosophie Section */}
+                    <section id="philosophie" className="w-full py-40 px-6 relative z-10 flex flex-col items-center">
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand/5 to-transparent opacity-50 pointer-events-none"></div>
+                        <div className="max-w-4xl w-full text-center relative z-10">
+                            <div className="reveal">
+                                <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-6 block">Notre Vision</span>
+                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white mb-12 drop-shadow-lg">
+                                    Retour aux Sources
+                                </h2>
+                                <div className="space-y-8 text-white/60 text-lg md:text-2xl leading-relaxed font-medium">
+                                    <p>
+                                        Marre des serveurs "Pay-to-Win" surchargés ? Nous aussi. <span className="text-white font-bold">Daybreak</span> est né d'une envie simple : retrouver l'essence pure du multijoueur.
+                                    </p>
+                                    <p>
+                                        Pas de grades payants déséquilibrés. Pas de menus complexes. Juste une communauté soudée, une map vierge à conquérir, et des soirées épiques entre amis.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* 4. Ressources Section */}
+                    <section id="ressources" className="w-full py-32 px-6 relative z-10 flex flex-col items-center">
                         <div className="w-full max-w-7xl flex flex-col items-center">
                             <div className="reveal text-center mb-20">
                                 <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Téléchargements</span>
-                                <h2 className="text-4xl md:text-6xl font-display font-black uppercase tracking-tighter italic text-white">Ressources</h2>
+                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white drop-shadow-xl">Ressources</h2>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 w-full max-w-5xl">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl mb-8">
                                 {/* Modpack Ultimate */}
-                                <div className="reveal glass-card p-8 rounded-3xl relative overflow-hidden group">
-                                    <div className="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-40 transition-opacity">
-                                        <Icons.Download className="w-24 h-24 text-brand transform rotate-12" />
+                                <div className="reveal glass-card p-8 lg:p-10 rounded-3xl relative overflow-hidden group hover:border-brand/40">
+                                    <div className="absolute -bottom-6 -right-6 p-6 opacity-5 group-hover:opacity-10 transition-all duration-500 group-hover:-translate-y-2 group-hover:-translate-x-2">
+                                        <Icons.Download className="w-48 h-48 text-brand" />
                                     </div>
                                     <div className="relative z-10">
-                                        <h3 className="text-2xl font-display font-black italic uppercase mb-2 text-white">Modpack Ultimate</h3>
-                                        <span className="inline-block bg-brand/20 text-brand text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded mb-4">Recommandé</span>
-                                        <p className="text-white/60 text-sm leading-relaxed mb-8 h-20">
-                                            Modpack client complet incluant le chat vocal de proximité (Plasmo Voice), ainsi que toutes les améliorations graphiques (Shaders, Resource Pack, Animations) pour une immersion totale.
+                                        <div className="flex justify-between items-start mb-6">
+                                            <h3 className="text-2xl font-display font-black italic uppercase text-white">Modpack Ultimate</h3>
+                                            <span className="inline-block bg-brand/20 border border-brand/30 text-brand text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(255,30,237,0.2)]">Recommandé</span>
+                                        </div>
+                                        <p className="text-white/60 text-sm lg:text-base leading-relaxed mb-10 h-24">
+                                            L'expérience visuelle et auditive ultime. Inclut le chat vocal de proximité (Plasmo Voice), les Shaders pré-configurés, le Resource Pack immersif et toutes les optimisations.
                                         </p>
-                                        <a href="#" className="inline-flex items-center gap-2 text-white font-bold uppercase tracking-widest text-xs hover:text-brand transition-colors">
+                                        <a href="#" className="inline-flex items-center gap-3 bg-white/5 hover:bg-brand hover:text-white border border-white/10 hover:border-brand text-white font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-[0_0_20px_rgba(255,30,237,0.4)] transform hover:-translate-y-1">
                                             <span>Télécharger</span>
                                             <Icons.Download className="w-4 h-4" />
                                         </a>
@@ -963,17 +886,19 @@
                                 </div>
 
                                 {/* Modpack Light */}
-                                <div className="reveal glass-card p-8 rounded-3xl relative overflow-hidden group" style={{transitionDelay: '100ms'}}>
-                                    <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-30 transition-opacity">
-                                        <Icons.Leaf className="w-24 h-24 text-green-400 transform -rotate-12" />
+                                <div className="reveal glass-card p-8 lg:p-10 rounded-3xl relative overflow-hidden group hover:border-green-500/40" style={{transitionDelay: '150ms'}}>
+                                    <div className="absolute -bottom-6 -right-6 p-6 opacity-5 group-hover:opacity-10 transition-all duration-500 group-hover:-translate-y-2 group-hover:-translate-x-2">
+                                        <Icons.Leaf className="w-48 h-48 text-green-400" />
                                     </div>
                                     <div className="relative z-10">
-                                        <h3 className="text-2xl font-display font-black italic uppercase mb-2 text-white">Modpack Light</h3>
-                                        <span className="inline-block bg-green-500/20 text-green-400 text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded mb-4">Performance</span>
-                                        <p className="text-white/60 text-sm leading-relaxed mb-8 h-20">
-                                            Version légère optimisée pour les petites configurations. Inclut l'essentiel : Plasmo Voice et de légères optimisations graphiques pour jouer sans lag.
+                                        <div className="flex justify-between items-start mb-6">
+                                            <h3 className="text-2xl font-display font-black italic uppercase text-white">Modpack Light</h3>
+                                            <span className="inline-block bg-green-500/20 border border-green-500/30 text-green-400 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(74,222,128,0.2)]">Performance</span>
+                                        </div>
+                                        <p className="text-white/60 text-sm lg:text-base leading-relaxed mb-10 h-24">
+                                            Conçu pour la fluidité absolue sur les petites configurations. Garde l'essentiel (Chat vocal Plasmo Voice) avec des réglages axés sur les hauts FPS (Sodium, Lithium).
                                         </p>
-                                        <a href="#" className="inline-flex items-center gap-2 text-white font-bold uppercase tracking-widest text-xs hover:text-green-400 transition-colors">
+                                        <a href="#" className="inline-flex items-center gap-3 bg-white/5 hover:bg-green-500 hover:text-black border border-white/10 hover:border-green-500 text-white font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-[0_0_20px_rgba(74,222,128,0.4)] transform hover:-translate-y-1">
                                             <span>Télécharger</span>
                                             <Icons.Download className="w-4 h-4" />
                                         </a>
@@ -982,78 +907,48 @@
                             </div>
 
                             {/* Secondary Actions */}
-                            <div className="flex flex-wrap justify-center gap-4 mt-8 w-full max-w-5xl">
-                                <a href="https://youtube.com" target="_blank" className="reveal flex-1 min-w-[200px] glass-card p-6 rounded-2xl flex items-center justify-center gap-4 hover:bg-white/5 transition-all cursor-pointer group" style={{transitionDelay: '200ms'}}>
-                                    <div className="w-10 h-10 rounded-full bg-red-600/20 flex items-center justify-center text-red-500 group-hover:scale-110 transition-transform">
-                                        <Icons.Youtube className="w-5 h-5" />
+                            <div className="flex flex-col sm:flex-row justify-center gap-6 mt-4 w-full max-w-5xl">
+                                <a href="https://youtube.com" target="_blank" className="reveal flex-1 glass-card p-6 rounded-2xl flex items-center justify-start sm:justify-center gap-5 hover:border-red-500/30 transition-all cursor-pointer group" style={{transitionDelay: '200ms'}}>
+                                    <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 group-hover:scale-110 group-hover:bg-red-500 group-hover:text-white transition-all shadow-lg">
+                                        <Icons.Youtube className="w-6 h-6" />
                                     </div>
                                     <div className="text-left">
-                                        <span className="block text-white font-bold uppercase text-xs tracking-wider">Tutoriel</span>
-                                        <span className="text-[10px] text-white/40">Installation & Crack</span>
+                                        <span className="block text-white font-bold uppercase text-sm tracking-wider group-hover:text-red-400 transition-colors">Tutoriel Vidéo</span>
+                                        <span className="text-xs text-white/50 font-medium mt-1 block">Guide d'installation pas-à-pas</span>
                                     </div>
                                 </a>
 
-                                <button onClick={() => setCreditsOpen(true)} className="reveal flex-1 min-w-[200px] glass-card p-6 rounded-2xl flex items-center justify-center gap-4 hover:bg-white/5 transition-all cursor-pointer group" style={{transitionDelay: '300ms'}}>
-                                    <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
-                                        <Icons.Info className="w-5 h-5" />
+                                <button onClick={() => setCreditsOpen(true)} className="reveal flex-1 glass-card p-6 rounded-2xl flex items-center justify-start sm:justify-center gap-5 hover:border-blue-500/30 transition-all cursor-pointer group" style={{transitionDelay: '300ms'}}>
+                                    <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white transition-all shadow-lg">
+                                        <Icons.Info className="w-6 h-6" />
                                     </div>
                                     <div className="text-left">
-                                        <span className="block text-white font-bold uppercase text-xs tracking-wider">Crédits</span>
-                                        <span className="text-[10px] text-white/40">Liste des mods</span>
+                                        <span className="block text-white font-bold uppercase text-sm tracking-wider group-hover:text-blue-400 transition-colors">Crédits Mods</span>
+                                        <span className="text-xs text-white/50 font-medium mt-1 block">Liste des créateurs & ressources</span>
                                     </div>
                                 </button>
                             </div>
                         </div>
                     </section>
 
-                    {/* Roadmap */}
-                    <section id="calendrier" className="w-full py-32 px-6 relative z-10 flex flex-col items-center">
-                        <div className="w-full max-w-7xl flex flex-col items-center">
-                            <div className="reveal text-center mb-24">
-                                <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Futur Proche</span>
-                                <h2 className="text-4xl md:text-6xl font-display font-black uppercase tracking-tighter italic text-white">Feuille de Route</h2>
-                            </div>
-
-                            <div className="relative w-full flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-8">
-                                <div className="absolute top-12 left-[2.4rem] lg:left-0 lg:top-12 w-1 h-[calc(100%-6rem)] lg:w-full lg:h-1 roadmap-line"></div>
-                                
-                                {roadmap.map((step, i) => (
-                                    <div key={i} className="reveal relative z-10 flex flex-row lg:flex-col items-start lg:items-center w-full lg:w-1/3 text-left lg:text-center pl-4 lg:pl-0" style={{transitionDelay: `${i * 150}ms`}}>
-                                        <div className={`flex-shrink-0 w-20 h-20 rounded-2xl mb-0 lg:mb-8 mr-8 lg:mr-0 flex items-center justify-center glass-card border-2 bg-black ${step.active ? 'border-brand shadow-[0_0_30px_rgba(255,30,237,0.3)]' : 'border-white/5'}`}>
-                                            <div className={`w-3 h-3 rounded-full ${step.active ? 'bg-brand animate-pulse' : 'bg-white/20'}`}></div>
-                                        </div>
-                                        <div>
-                                            <span className="text-[10px] text-white/40 font-bold uppercase tracking-widest mb-2 block">{step.date}</span>
-                                            <h3 className="font-display font-black text-2xl md:text-3xl text-white uppercase italic mb-4">{step.label}</h3>
-                                            <div className={`inline-block px-4 py-1 rounded-md text-[9px] font-black tracking-[0.2em] mb-6 ${step.active ? 'bg-brand/20 text-brand' : 'bg-white/5 text-white/20'}`}>
-                                                {step.status}
-                                            </div>
-                                            <p className={`text-sm leading-relaxed max-w-[320px] lg:mx-auto ${step.active ? 'text-white/60' : 'text-white/20 blur-[2px] select-none'}`}>
-                                                {step.desc}
-                                            </p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* FAQ */}
-                    <section id="faq" className="w-full py-32 px-6 flex flex-col items-center bg-[#080808]">
+                    {/* 5. Support Section */}
+                    <section id="support" className="w-full py-32 px-6 flex flex-col items-center relative z-10">
                         <div className="max-w-4xl w-full">
                             <div className="reveal text-center mb-20">
-                                <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Support</span>
-                                <h2 className="text-4xl md:text-6xl font-display font-black uppercase tracking-tighter italic text-white">Questions / Réponses</h2>
+                                <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Entraide</span>
+                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white drop-shadow-xl">Support & FAQ</h2>
                             </div>
                             <div className="space-y-4">
                                 {faqs.map((faq, i) => (
-                                    <div key={i} className="reveal glass-card rounded-2xl overflow-hidden group">
-                                        <button onClick={() => setActiveFaq(activeFaq === i ? null : i)} className="w-full px-8 py-8 text-left flex justify-between items-center transition-all hover:bg-white/5">
-                                            <span className="font-bold text-white group-hover:text-brand text-lg transition-colors font-display tracking-tight">{faq.q}</span>
-                                            <span className={`text-xl transition-transform duration-300 ${activeFaq === i ? 'rotate-45 text-brand' : 'text-white/30'}`}>+</span>
+                                    <div key={i} className={`reveal glass-card rounded-2xl overflow-hidden group transition-all duration-300 ${activeFaq === i ? 'border-brand/40 bg-white/[0.04]' : 'hover:bg-white/[0.03]'}`} style={{transitionDelay: `${i * 100}ms`}}>
+                                        <button onClick={() => setActiveFaq(activeFaq === i ? null : i)} className="w-full px-8 py-6 text-left flex justify-between items-center outline-none">
+                                            <span className={`font-bold text-lg transition-colors font-display tracking-wide ${activeFaq === i ? 'text-white' : 'text-white/80 group-hover:text-white'}`}>{faq.q}</span>
+                                            <span className={`flex items-center justify-center w-8 h-8 rounded-full border transition-all duration-300 ${activeFaq === i ? 'rotate-45 border-brand bg-brand/10 text-brand' : 'border-white/10 text-white/50 group-hover:bg-white/5'}`}>
+                                                <Icons.Close className={`w-4 h-4 transform ${activeFaq === i ? '' : 'rotate-45'}`} />
+                                            </span>
                                         </button>
-                                        <div className={`transition-all duration-300 ease-in-out overflow-hidden ${activeFaq === i ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                            <div className="px-8 pb-8 text-white/50 leading-relaxed">
+                                        <div className={`transition-all duration-400 ease-in-out overflow-hidden ${activeFaq === i ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                            <div className="px-8 pb-8 text-white/60 leading-relaxed text-sm lg:text-base border-t border-white/5 pt-4 mt-2">
                                                 {faq.a}
                                             </div>
                                         </div>
@@ -1063,46 +958,55 @@
                         </div>
                     </section>
 
-                    {/* Origin Story */}
-                    <section id="origine" className="w-full py-40 px-6 relative z-10 flex flex-col items-center">
-                        <div className="max-w-4xl w-full text-center">
-                            <div className="reveal">
-                                <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-6 block">Philosophie</span>
-                                <h2 className="text-4xl md:text-6xl font-display font-black uppercase tracking-tighter italic text-white mb-12">
-                                    Retour aux Sources
-                                </h2>
-                                <div className="space-y-8 text-white/50 text-xl md:text-2xl leading-relaxed font-medium">
-                                    <p>
-                                        Marre des serveurs "Pay-to-Win" surchargés ? Nous aussi. <span className="text-white">Daybreak</span> est né d'une envie simple : retrouver l'essence du multijoueur.
-                                    </p>
-                                    <p>
-                                        Pas de grades payants déséquilibrés. Pas de hubs complexes. Juste une communauté soudée, une map vierge à conquérir, et des soirées épiques entre amis sur Discord. C'est ça, l'esprit Daybreak.
-                                    </p>
-                                </div>
+                    {/* 6. Feuille de Route Section */}
+                    <section id="feuille-de-route" className="w-full py-32 px-6 relative z-10 flex flex-col items-center">
+                        <div className="w-full max-w-7xl flex flex-col items-center">
+                            <div className="reveal text-center mb-24">
+                                <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Futur Proche</span>
+                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white drop-shadow-xl">Feuille de Route</h2>
+                            </div>
+
+                            <div className="relative w-full flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-8">
+                                <div className="absolute top-10 left-[2.4rem] lg:left-0 lg:top-10 w-px lg:w-full h-[calc(100%-5rem)] lg:h-px roadmap-line"></div>
+                                
+                                {roadmap.map((step, i) => (
+                                    <div key={i} className={`reveal relative z-10 flex flex-row lg:flex-col items-start lg:items-center w-full lg:w-1/3 text-left lg:text-center pl-4 lg:pl-0 transition-all duration-500 ${!step.active && 'opacity-50 grayscale hover:grayscale-0 hover:opacity-100'}`} style={{transitionDelay: `${i * 150}ms`}}>
+                                        <div className={`flex-shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-2xl mb-0 lg:mb-8 mr-6 lg:mr-0 flex items-center justify-center glass-card border-2 bg-[#05000A] transition-all duration-500 ${step.active ? 'border-brand shadow-[0_0_30px_rgba(255,30,237,0.3)] scale-110' : 'border-white/10'}`}>
+                                            <div className={`w-3 h-3 rounded-full ${step.active ? 'bg-brand animate-glow-pulse shadow-[0_0_10px_rgba(255,30,237,0.8)]' : 'bg-white/30'}`}></div>
+                                        </div>
+                                        <div className="flex-1 mt-1 lg:mt-0">
+                                            <span className="text-[10px] text-white/50 font-black uppercase tracking-widest mb-2 block">{step.date}</span>
+                                            <h3 className="font-display font-black text-xl md:text-2xl text-white uppercase italic mb-3">{step.label}</h3>
+                                            <div className={`inline-block px-3 py-1 rounded-md text-[9px] font-black tracking-[0.2em] mb-4 border ${step.active ? 'bg-brand/10 border-brand/30 text-brand' : 'bg-white/5 border-white/10 text-white/40'}`}>
+                                                {step.status}
+                                            </div>
+                                            <p className="text-sm leading-relaxed text-white/60 max-w-[320px] lg:mx-auto font-medium">
+                                                {step.desc}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </section>
 
-                    {/* Join Us Section */}
-                    <section id="rejoindre" className="w-full py-32 px-6 flex flex-col items-center bg-gradient-to-t from-black to-[#080808] relative z-20">
-                         <div className="max-w-4xl w-full text-center">
-                            <div className="reveal mb-12">
+                    {/* 7. Nous Rejoindre Section */}
+                    <section id="rejoindre" className="w-full py-40 px-6 flex flex-col items-center relative z-20">
+                         <div className="absolute inset-0 bg-gradient-to-t from-brand/5 via-transparent to-transparent opacity-50 pointer-events-none"></div>
+                         <div className="max-w-4xl w-full text-center relative z-10 glass-card p-12 lg:p-20 rounded-[3rem] border-white/10 shadow-2xl">
+                            <div className="reveal">
                                 <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Communauté</span>
-                                <h2 className="text-4xl md:text-6xl font-display font-black uppercase tracking-tighter italic text-white mb-8">Nous Rejoindre</h2>
-                                <p className="text-white/50 mb-12 max-w-xl mx-auto">Rejoignez la conversation, suivez les annonces et participez à la vie du serveur sur nos différents réseaux.</p>
+                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white mb-8">Nous Rejoindre</h2>
+                                <p className="text-white/60 text-lg mb-12 max-w-xl mx-auto font-medium">L'aventure ne fait que commencer. Rejoignez le Discord pour ne rien manquer des annonces et participer à la vie du serveur.</p>
                                 
-                                <div className="flex flex-wrap justify-center gap-6">
-                                    <a href="https://discord.gg/daybreak" target="_blank" className="group bg-[#5865F2] hover:bg-[#4a56d4] text-white py-4 px-8 rounded-xl font-bold uppercase tracking-widest text-xs flex items-center gap-3 transition-all transform hover:-translate-y-1 shadow-[0_10px_20px_-5px_rgba(88,101,242,0.4)]">
-                                        <Icons.Discord className="w-5 h-5" />
-                                        <span>Discord</span>
+                                <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
+                                    <a href="https://discord.gg/daybreak" target="_blank" rel="noopener noreferrer" className="group bg-[#5865F2] hover:bg-[#4a56d4] text-white py-4 px-8 rounded-2xl font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 shadow-[0_10px_20px_rgba(88,101,242,0.3)] hover:shadow-[0_15px_30px_rgba(88,101,242,0.5)]">
+                                        <Icons.Discord className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                        <span>Rejoindre Discord</span>
                                     </a>
-                                    <a href="https://twitter.com/daybreakxyz" target="_blank" className="group bg-black border border-white/20 hover:border-white text-white py-4 px-8 rounded-xl font-bold uppercase tracking-widest text-xs flex items-center gap-3 transition-all transform hover:-translate-y-1 hover:bg-white/5">
-                                        <Icons.X className="w-5 h-5" />
-                                        <span>@daybreakxyz</span>
-                                    </a>
-                                    <a href="mailto:contact@daybreaksmp.xyz" className="group bg-white/5 border border-white/10 hover:border-brand/50 text-white py-4 px-8 rounded-xl font-bold uppercase tracking-widest text-xs flex items-center gap-3 transition-all transform hover:-translate-y-1 hover:bg-white/10 hover:text-brand">
-                                        <Icons.Mail className="w-5 h-5" />
-                                        <span>Email</span>
+                                    <a href="https://twitter.com/daybreakxyz" target="_blank" rel="noopener noreferrer" className="group bg-[#0A0A0A] border border-white/10 hover:border-white/30 text-white py-4 px-8 rounded-2xl font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 hover:bg-white/5 shadow-lg">
+                                        <Icons.X className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                                        <span>Suivre @daybreak</span>
                                     </a>
                                 </div>
                             </div>
@@ -1110,46 +1014,46 @@
                     </section>
 
                     {/* Footer */}
-                    <footer className="w-full pt-12 pb-12 px-6 border-t border-white/5 bg-black flex flex-col items-center relative z-20">
-                        <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 reveal">
+                    <footer className="w-full pt-20 pb-10 px-6 border-t border-white/10 bg-[#030005] flex flex-col items-center relative z-20">
+                        <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 reveal">
                             
                             {/* Brand */}
-                            <div className="flex flex-col space-y-8 lg:col-span-2">
-                                <div className="flex items-center space-x-3">
-                                    <div className="w-8 h-8 bg-brand rounded-md flex items-center justify-center font-black italic text-white text-sm">D</div>
-                                    <span className="text-xl font-display font-black tracking-tighter uppercase italic text-white">Daybreak</span>
+                            <div className="flex flex-col space-y-6 lg:col-span-2">
+                                <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => scrollToSection('Accueil')}>
+                                    <div className="w-10 h-10 bg-gradient-to-br from-brand to-brand-dark rounded-xl flex items-center justify-center font-black italic shadow-[0_0_15px_rgba(255,30,237,0.3)] text-white text-lg">D</div>
+                                    <span className="text-2xl font-display font-black tracking-tighter uppercase italic text-white group-hover:text-brand transition-colors">Daybreak</span>
                                 </div>
-                                <p className="text-white/30 text-sm font-medium leading-relaxed max-w-sm">
-                                    Une expérience Minecraft communautaire premium. <br/>
-                                    Rejoignez l'aventure dès maintenant.
+                                <p className="text-white/40 text-sm font-medium leading-relaxed max-w-sm">
+                                    Une expérience Minecraft communautaire premium pensée pour les joueurs. L'authenticité avant tout.
                                 </p>
                             </div>
 
                             {/* Links */}
                             <div className="flex flex-col space-y-6">
-                                <h4 className="text-xs font-black uppercase tracking-[0.3em] text-white">Explorer</h4>
-                                <ul className="flex flex-col space-y-4 text-white/40 text-sm font-semibold hover:text-white/60">
-                                    <li onClick={() => scrollToSection('accueil')} className="cursor-pointer hover:text-brand transition-colors">Accueil</li>
-                                    <li onClick={() => scrollToSection('serveurs')} className="cursor-pointer hover:text-brand transition-colors">Serveurs</li>
-                                    <li onClick={() => scrollToSection('ressources')} className="cursor-pointer hover:text-brand transition-colors">Ressources</li>
-                                    <li onClick={() => scrollToSection('calendrier')} className="cursor-pointer hover:text-brand transition-colors">Roadmap</li>
-                                    <li onClick={() => scrollToSection('faq')} className="cursor-pointer hover:text-brand transition-colors">FAQ</li>
+                                <h4 className="text-xs font-black uppercase tracking-[0.3em] text-white/80">Navigation</h4>
+                                <ul className="flex flex-col space-y-3 text-white/50 text-sm font-semibold">
+                                    {navItems.slice(0, 4).map((item) => (
+                                        <li key={`footer1-${item}`} onClick={() => scrollToSection(item)} className="cursor-pointer hover:text-brand hover:translate-x-1 transition-all inline-block w-fit">{item}</li>
+                                    ))}
                                 </ul>
                             </div>
 
-                            {/* Legal */}
+                            {/* Links 2 & Legal */}
                             <div className="flex flex-col space-y-6">
-                                <h4 className="text-xs font-black uppercase tracking-[0.3em] text-white">Légal</h4>
-                                <ul className="flex flex-col space-y-4 text-white/40 text-sm font-semibold hover:text-white/60">
-                                    <li className="cursor-pointer hover:text-brand transition-colors">Mentions Légales</li>
-                                    <li className="cursor-pointer hover:text-brand transition-colors">CGU / CGV</li>
+                                <h4 className="text-xs font-black uppercase tracking-[0.3em] text-white/80">Légal & Plus</h4>
+                                <ul className="flex flex-col space-y-3 text-white/50 text-sm font-semibold">
+                                    <li onClick={() => scrollToSection('Support')} className="cursor-pointer hover:text-brand hover:translate-x-1 transition-all inline-block w-fit">Support FAQ</li>
+                                    <li className="cursor-pointer hover:text-brand hover:translate-x-1 transition-all inline-block w-fit">Règlement du serveur</li>
+                                    <li className="cursor-pointer hover:text-brand hover:translate-x-1 transition-all inline-block w-fit">Mentions Légales</li>
                                 </ul>
                             </div>
                         </div>
                         
-                        <div className="max-w-7xl w-full mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[10px] text-white/20 font-bold uppercase tracking-widest gap-4">
-                            <p>© 2026 Daybreak SMP.</p>
-                            <p>Non affilié à Mojang AB.</p>
+                        <div className="max-w-7xl w-full mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-[11px] text-white/30 font-bold uppercase tracking-widest gap-4">
+                            <p>© 2026 DAYBREAK SMP. TOUS DROITS RÉSERVÉS.</p>
+                            <p className="flex items-center gap-2">
+                                NON AFFILIÉ À <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Mojang_Studios_logo.svg" alt="Mojang" className="h-3 opacity-30 invert" />
+                            </p>
                         </div>
                     </footer>
                 </div>
@@ -1160,7 +1064,7 @@
         root.render(<App />);
     </script>
 
-    <!-- ===== SCRIPT WIDGET ===== -->
+    <!-- ===== SCRIPT WIDGET VANILLA JS ===== -->
     <script>
         let isDragging = false;
         let offsetX = 0;
@@ -1177,7 +1081,7 @@
         document.addEventListener('mouseup', stopDragging);
 
         function startDragging(e) {
-            if (e.target === closeBtn) return;
+            if (e.target.closest('.widget-close-btn')) return;
             isDragging = true;
             offsetX = e.clientX - widget.offsetLeft;
             offsetY = e.clientY - widget.offsetTop;
@@ -1186,6 +1090,7 @@
 
         function drag(e) {
             if (!isDragging) return;
+            e.preventDefault(); // Empeche la selection de texte
             let newX = e.clientX - offsetX;
             let newY = e.clientY - offsetY;
             const maxX = window.innerWidth - widget.offsetWidth;
@@ -1199,6 +1104,7 @@
         }
 
         function stopDragging() {
+            if(!isDragging) return;
             isDragging = false;
             widget.classList.remove('dragging');
         }
@@ -1209,17 +1115,17 @@
             closeWidget();
         });
 
-        closeBtn.addEventListener('mousedown', (e) => {
-            e.stopPropagation();
-        });
-
         reopenBtn.addEventListener('click', openWidget);
 
         function closeWidget() {
             widget.classList.add('hidden');
             setTimeout(() => {
                 widget.style.display = 'none';
-                reopenBtn.style.display = 'block';
+                reopenBtn.style.display = 'flex';
+                // Petite animation sur le bouton de réouverture
+                reopenBtn.style.animation = 'none';
+                reopenBtn.offsetHeight; /* trigger reflow */
+                reopenBtn.style.animation = null; 
             }, 300);
             localStorage.setItem('widgetVisible', 'false');
         }
@@ -1243,8 +1149,11 @@
             const x = localStorage.getItem('widgetX');
             const y = localStorage.getItem('widgetY');
             if (x !== null && y !== null) {
-                widget.style.left = x + 'px';
-                widget.style.top = y + 'px';
+                // Verification pour eviter que le widget sorte de l'ecran au redimensionnement
+                const safeX = Math.min(x, window.innerWidth - 320);
+                const safeY = Math.min(y, window.innerHeight - 100);
+                widget.style.left = Math.max(0, safeX) + 'px';
+                widget.style.top = Math.max(0, safeY) + 'px';
                 widget.style.right = 'auto';
             }
         }
@@ -1254,11 +1163,11 @@
             if (isVisible === 'false') {
                 widget.style.display = 'none';
                 widget.classList.add('hidden');
-                reopenBtn.style.display = 'block';
+                reopenBtn.style.display = 'flex';
             }
         }
 
-        // ===== MISE À JOUR STATUT (TON CODE) =====
+        // ===== MISE À JOUR STATUT =====
         async function updateServerStatus() {
             try {
                 const res = await fetch('https://api.mcsrvstat.us/2/daybreaksmp.xyz:25110');
@@ -1271,46 +1180,49 @@
 
                 if (data.online) {
                     dot.className = "status-dot online";
-                    text.innerText = "SERVEUR ALLUMÉ";
-                    count.innerHTML = `<span>${data.players.online} / ${data.players.max}</span>`;
+                    text.innerText = "SERVEUR EN LIGNE";
+                    count.innerHTML = `En ligne <span>${data.players?.online || 0} / ${data.players?.max || 0}</span>`;
 
                     list.innerHTML = "";
-                    if (data.players.list && data.players.list.length > 0) {
+                    if (data.players?.list && data.players.list.length > 0) {
                         data.players.list.forEach(name => {
                             list.innerHTML += `
-                                <div class="player-item">
-                                    <img class="player-head" src="https://mc-heads.net/avatar/${name}/24" alt="${name}">
+                                <div class="player-item" title="${name}">
+                                    <img class="player-head" src="https://mc-heads.net/avatar/${name}/24" onerror="this.onerror=null; this.src='https://mc-heads.net/avatar/Steve/24'" alt="${name}">
                                     <span class="player-name">${name}</span>
                                 </div>`;
                         });
-                    } else if (data.players.online > 0) {
-                        list.innerHTML = "<div style='font-size:12px; color:#888; grid-column: 1/-1; text-align: center;'>Active le query pour voir les noms</div>";
+                    } else if (data.players?.online > 0) {
+                        list.innerHTML = "<div style='font-size:12px; font-family: Inter; color:rgba(255,255,255,0.4); grid-column: 1/-1; text-align: center; padding: 10px 0;'>Les noms des joueurs sont masqués.</div>";
+                    } else {
+                        list.innerHTML = "<div style='font-size:12px; font-family: Inter; color:rgba(255,255,255,0.4); grid-column: 1/-1; text-align: center; padding: 10px 0;'>Aucun joueur connecté.</div>";
                     }
                 } else {
                     dot.className = "status-dot offline";
-                    text.innerText = "SERVEUR ÉTEINT";
-                    count.innerHTML = "<span>0 / 0</span>";
+                    text.innerText = "SERVEUR HORS LIGNE";
+                    count.innerHTML = "En ligne <span>0 / 0</span>";
                     list.innerHTML = "";
                 }
             } catch (e) { 
                 console.error("Erreur API statut serveur", e);
-                document.getElementById('status-text').innerText = "ERREUR CONNEXION";
+                document.getElementById('status-text').innerText = "ERREUR RÉSEAU";
             }
         }
 
         // ===== SUPPORT TACTILE =====
         header.addEventListener('touchstart', (e) => {
-            if (e.target === closeBtn) return;
+            if (e.target.closest('.widget-close-btn')) return;
             const touch = e.touches[0];
             offsetX = touch.clientX - widget.offsetLeft;
             offsetY = touch.clientY - widget.offsetTop;
             isDragging = true;
             widget.classList.add('dragging');
-        });
+        }, { passive: true });
 
         document.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
-            e.preventDefault();
+            // Ne pas preventDefault ici si on veut garder le scroll natif parfois, mais indispensable pour drag
+            if(e.cancelable) e.preventDefault(); 
             const touch = e.touches[0];
             let newX = touch.clientX - offsetX;
             let newY = touch.clientY - offsetY;
@@ -1322,7 +1234,7 @@
             widget.style.top = newY + 'px';
             widget.style.right = 'auto';
             savePosition(newX, newY);
-        });
+        }, { passive: false });
 
         document.addEventListener('touchend', () => {
             isDragging = false;
@@ -1335,8 +1247,14 @@
             restoreVisibility();
             updateServerStatus();
             setInterval(updateServerStatus, 60000); // Mise à jour toutes les 60 secondes
+            
+            // Re-check la position au resize de la fenêtre
+            window.addEventListener('resize', () => {
+                if(widget.style.display !== 'none' && !widget.classList.contains('hidden')) {
+                    restorePosition();
+                }
+            });
         });
     </script>
-
 </body>
 </html>
