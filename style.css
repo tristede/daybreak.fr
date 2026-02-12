@@ -1,0 +1,199 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f5f5;
+}
+
+.main-content {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Widget principal */
+.draggable-widget {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 280px;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    backdrop-filter: blur(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.draggable-widget.dragging {
+    cursor: move;
+    opacity: 0.9;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.draggable-widget.hidden {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+/* Header du widget */
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    border-radius: 12px 12px 0 0;
+    cursor: grab;
+    user-select: none;
+    color: white;
+}
+
+.widget-header:active {
+    cursor: grabbing;
+}
+
+.widget-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    flex-grow: 1;
+}
+
+/* Bouton de fermeture */
+.close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: rotate(90deg);
+}
+
+.close-btn:active {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Contenu du widget */
+.widget-content {
+    padding: 20px;
+}
+
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.status-item:last-child {
+    border-bottom: none;
+}
+
+.status-item .label {
+    font-weight: 600;
+    color: #555;
+    font-size: 14px;
+}
+
+.status-item span:last-child {
+    font-weight: 500;
+    color: #333;
+    font-size: 14px;
+}
+
+/* Statut en ligne/hors ligne */
+.status-online {
+    color: #4CAF50 !important;
+    font-weight: 600 !important;
+}
+
+.status-online::before {
+    content: '●';
+    margin-right: 5px;
+}
+
+.status-offline {
+    color: #f44336 !important;
+    font-weight: 600 !important;
+}
+
+.status-offline::before {
+    content: '●';
+    margin-right: 5px;
+}
+
+/* Bouton de réouverture */
+.reopen-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    z-index: 9998;
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.reopen-btn:hover {
+    background: linear-gradient(135deg, #45a049, #3d8b40);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(76, 175, 80, 0.5);
+}
+
+.reopen-btn:active {
+    transform: translateY(0);
+}
+
+/* Animation pour attirer l'attention */
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(76, 175, 80, 0.6);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .draggable-widget {
+        width: 250px;
+        top: 10px;
+        right: 10px;
+    }
+    
+    .widget-header h3 {
+        font-size: 14px;
+    }
+    
+    .status-item .label,
+    .status-item span:last-child {
+        font-size: 13px;
+    }
+}
