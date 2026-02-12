@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Statut Serveur</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Votre contenu de site habituel -->
+    <div class="main-content">
+        <h1>Mon Site</h1>
+        <p>Le contenu de votre site ici...</p>
+    </div>
+
+    <!-- Widget de statut déplaçable -->
+    <div id="server-status-widget" class="draggable-widget">
+        <div class="widget-header">
+            <h3>Statut du Serveur</h3>
+            <button class="close-btn" id="close-widget" aria-label="Fermer">&times;</button>
+        </div>
+        <div class="widget-content">
+            <div class="status-item">
+                <span class="label">État:</span>
+                <span id="server-state" class="status-online">En ligne</span>
+            </div>
+            <div class="status-item">
+                <span class="label">Joueurs:</span>
+                <span id="player-count">0/20</span>
+            </div>
+            <div class="status-item">
+                <span class="label">Version:</span>
+                <span id="server-version">1.20.4</span>
+            </div>
+            <div class="status-item">
+                <span class="label">Ping:</span>
+                <span id="server-ping">45ms</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton pour réafficher le widget -->
+    <button id="reopen-widget" class="reopen-btn" style="display: none;">
+        📊 Statut Serveur
+    </button>
+
+    <script src="script.js"></script>
+</body>
+</html>
