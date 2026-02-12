@@ -604,7 +604,8 @@
             const [creditsOpen, setCreditsOpen] = useState(false);
             const [activeFaq, setActiveFaq] = useState(null);
 
-            const navItems = ['Accueil', 'Modes de jeu', 'Philosophie', 'Ressources', 'Support', 'Feuille de route', 'Nous rejoindre'];
+            // "Philosophie" a été retiré de la navigation
+            const navItems = ['Accueil', 'Modes de jeu', 'Ressources', 'Support', 'Feuille de route', 'Nous rejoindre'];
 
             useEffect(() => {
                 const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -628,7 +629,6 @@
                 const idMap = {
                     'Accueil': 'accueil',
                     'Modes de jeu': 'modes-de-jeu',
-                    'Philosophie': 'philosophie',
                     'Ressources': 'ressources',
                     'Support': 'support',
                     'Feuille de route': 'feuille-de-route',
@@ -657,24 +657,27 @@
             const roadmap = [
                 { 
                     date: "Lancement - 2026", 
-                    label: "SAISON 1 : L'ÉVEIL", 
+                    label: "PHASE 1 : MINECRAFT", 
                     status: "EN LIGNE", 
-                    desc: "Ouverture du serveur Survie Minecraft. Édition spéciale Ramadan & Carnaval. Au programme : Économie joueurs, Claim de terrains, et Soirées UHC hebdomadaires.",
-                    active: true
+                    desc: <span>On commence par <strong className="text-brand font-semibold">Minecraft Java</strong>. C'est notre jeu de coeur, parfait pour tester des mécaniques et créer le début de notre histoire.</span>,
+                    active: true,
+                    blurred: false
                 },
                 { 
                     date: "Printemps 2026", 
-                    label: "PROJET : TITAN", 
-                    status: "EN DÉV", 
-                    desc: "Les données de cette phase sont corrompues. Nos ingénieurs travaillent au décryptage des nouvelles mécaniques de jeu. Restez à l'écoute.",
-                    active: false
+                    label: "EXPANSION CRÉATIVE", 
+                    status: "DÉVELOPPEMENT", 
+                    desc: "Secret",
+                    active: false,
+                    blurred: false
                 },
                 { 
                     date: "Été 2026", 
-                    label: "EXPANSION", 
-                    status: "BLOQUÉ", 
-                    desc: "Accès refusé. Niveau d'accréditation insuffisant. De nouveaux territoires attendent d'être découverts.",
-                    active: false
+                    label: "SECRET", 
+                    status: "SECRET", 
+                    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.",
+                    active: false,
+                    blurred: true
                 }
             ];
 
@@ -776,7 +779,7 @@
                         <div className="w-full max-w-7xl flex flex-col items-center">
                             <div className="reveal text-center mb-20">
                                 <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Modes de jeu</span>
-                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white drop-shadow-xl">3 Serveurs Inédits</h2>
+                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white drop-shadow-xl">Nos Univers</h2>
                             </div>
 
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 w-full">
@@ -794,7 +797,7 @@
                                             <span className="bg-purple-500/20 border border-purple-500/30 text-purple-300 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(168,85,247,0.2)]">Hardcore</span>
                                         </div>
                                         <p className="text-white/60 text-sm lg:text-base leading-relaxed flex-grow">
-                                            Notre version du défi extrême. Objectif : Tuer l'Ender Dragon. <strong className="text-purple-300">Attention : si vous mourez, la map est intégralement réinitialisée !</strong> Jouable en solo ou en coopération.
+                                            Notre version du défi Kai Cenat. Objectif : Tuer l'Ender Dragon. <strong className="text-purple-300 font-semibold">Si un seul joueur meurt, le monde entier est reset.</strong>
                                         </p>
                                     </div>
                                 </div>
@@ -811,7 +814,7 @@
                                         </div>
                                         <h3 className="text-2xl lg:text-3xl font-display font-black italic uppercase mb-4 text-white">Survie Lifesteal</h3>
                                         <p className="text-white/60 text-sm lg:text-base leading-relaxed flex-grow">
-                                            Affrontez les éléments et les autres joueurs ! Gagnez des cœurs en éliminant vos adversaires. Explorez une map remplie de <strong className="text-white">structures customs</strong> et équipez-vous d'<strong className="text-white">armes rares</strong>.
+                                            Une survie compétitive : <strong className="text-brand font-semibold">volez les cœurs</strong> de vos adversaires en les éliminant. Structures customs et armes rares au programme.
                                         </p>
                                     </div>
                                 </div>
@@ -827,7 +830,7 @@
                                         </div>
                                         <h3 className="text-2xl lg:text-3xl font-display font-black italic uppercase mb-4 text-white">Mini-Jeux</h3>
                                         <p className="text-white/60 text-sm lg:text-base leading-relaxed flex-grow">
-                                            Rejoignez nos soirées communautaires : <strong className="text-white">Bedwars, Buildbattle, Maps Horreur</strong> et bien plus ! L'agenda est dispo sur Discord. Jouez avec vos amis.
+                                            <strong className="text-blue-400 font-semibold">Bedwars, Buildbattle, maps horreur...</strong> On organise des petites soirées chaque semaine juste pour déconnecter.
                                         </p>
                                     </div>
                                 </div>
@@ -835,33 +838,15 @@
                         </div>
                     </section>
 
-                    {/* 3. Philosophie Section */}
-                    <section id="philosophie" className="w-full py-40 px-6 relative z-10 flex flex-col items-center">
-                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand/5 to-transparent opacity-50 pointer-events-none"></div>
-                        <div className="max-w-4xl w-full text-center relative z-10">
-                            <div className="reveal">
-                                <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-6 block">Notre Vision</span>
-                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white mb-12 drop-shadow-lg">
-                                    Retour aux Sources
-                                </h2>
-                                <div className="space-y-8 text-white/60 text-lg md:text-2xl leading-relaxed font-medium">
-                                    <p>
-                                        Marre des serveurs "Pay-to-Win" surchargés ? Nous aussi. <span className="text-white font-bold">Daybreak</span> est né d'une envie simple : retrouver l'essence pure du multijoueur.
-                                    </p>
-                                    <p>
-                                        Pas de grades payants déséquilibrés. Pas de menus complexes. Juste une communauté soudée, une map vierge à conquérir, et des soirées épiques entre amis.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* 4. Ressources Section */}
+                    {/* 3. Ressources Section */}
                     <section id="ressources" className="w-full py-32 px-6 relative z-10 flex flex-col items-center">
                         <div className="w-full max-w-7xl flex flex-col items-center">
-                            <div className="reveal text-center mb-20">
+                            <div className="reveal text-center mb-16">
                                 <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Téléchargements</span>
-                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white drop-shadow-xl">Ressources</h2>
+                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white drop-shadow-xl mb-6">Ressources</h2>
+                                <p className="text-white/50 max-w-xl mx-auto text-sm font-medium">
+                                    Pas besoin de modpack pour venir jouer. Mais si tu veux un jeu plus fluide ou que tu veux profiter du micro en jeu, on a préparé deux options.
+                                </p>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl mb-8">
@@ -876,7 +861,7 @@
                                             <span className="inline-block bg-brand/20 border border-brand/30 text-brand text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(255,30,237,0.2)]">Recommandé</span>
                                         </div>
                                         <p className="text-white/60 text-sm lg:text-base leading-relaxed mb-10 h-24">
-                                            L'expérience visuelle et auditive ultime. Inclut le chat vocal de proximité (Plasmo Voice), les Shaders pré-configurés, le Resource Pack immersif et toutes les optimisations.
+                                            Expérience complète. Inclut le <strong className="text-brand font-semibold">chat vocal (Plasmo Voice)</strong>, des <strong className="text-brand font-semibold">shaders optimisés</strong> et des <strong className="text-brand font-semibold">animations fluides</strong>.
                                         </p>
                                         <a href="#" className="inline-flex items-center gap-3 bg-white/5 hover:bg-brand hover:text-white border border-white/10 hover:border-brand text-white font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-[0_0_20px_rgba(255,30,237,0.4)] transform hover:-translate-y-1">
                                             <span>Télécharger</span>
@@ -896,7 +881,7 @@
                                             <span className="inline-block bg-green-500/20 border border-green-500/30 text-green-400 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(74,222,128,0.2)]">Performance</span>
                                         </div>
                                         <p className="text-white/60 text-sm lg:text-base leading-relaxed mb-10 h-24">
-                                            Conçu pour la fluidité absolue sur les petites configurations. Garde l'essentiel (Chat vocal Plasmo Voice) avec des réglages axés sur les hauts FPS (Sodium, Lithium).
+                                            Performances maximales. Conserve le <strong className="text-green-400 font-semibold">chat vocal</strong> avec des réglages stricts axés sur un <strong className="text-green-400 font-semibold">maximum de FPS</strong> pour toutes les configurations.
                                         </p>
                                         <a href="#" className="inline-flex items-center gap-3 bg-white/5 hover:bg-green-500 hover:text-black border border-white/10 hover:border-green-500 text-white font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-[0_0_20px_rgba(74,222,128,0.4)] transform hover:-translate-y-1">
                                             <span>Télécharger</span>
@@ -907,18 +892,8 @@
                             </div>
 
                             {/* Secondary Actions */}
-                            <div className="flex flex-col sm:flex-row justify-center gap-6 mt-4 w-full max-w-5xl">
-                                <a href="https://youtube.com" target="_blank" className="reveal flex-1 glass-card p-6 rounded-2xl flex items-center justify-start sm:justify-center gap-5 hover:border-red-500/30 transition-all cursor-pointer group" style={{transitionDelay: '200ms'}}>
-                                    <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-500 group-hover:scale-110 group-hover:bg-red-500 group-hover:text-white transition-all shadow-lg">
-                                        <Icons.Youtube className="w-6 h-6" />
-                                    </div>
-                                    <div className="text-left">
-                                        <span className="block text-white font-bold uppercase text-sm tracking-wider group-hover:text-red-400 transition-colors">Tutoriel Vidéo</span>
-                                        <span className="text-xs text-white/50 font-medium mt-1 block">Guide d'installation pas-à-pas</span>
-                                    </div>
-                                </a>
-
-                                <button onClick={() => setCreditsOpen(true)} className="reveal flex-1 glass-card p-6 rounded-2xl flex items-center justify-start sm:justify-center gap-5 hover:border-blue-500/30 transition-all cursor-pointer group" style={{transitionDelay: '300ms'}}>
+                            <div className="flex justify-center mt-4 w-full max-w-5xl">
+                                <button onClick={() => setCreditsOpen(true)} className="reveal glass-card px-8 py-6 rounded-2xl flex items-center justify-start sm:justify-center gap-5 hover:border-blue-500/30 transition-all cursor-pointer group" style={{transitionDelay: '200ms'}}>
                                     <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white transition-all shadow-lg">
                                         <Icons.Info className="w-6 h-6" />
                                     </div>
@@ -931,16 +906,16 @@
                         </div>
                     </section>
 
-                    {/* 5. Support Section */}
+                    {/* 4. Support Section */}
                     <section id="support" className="w-full py-32 px-6 flex flex-col items-center relative z-10">
                         <div className="max-w-4xl w-full">
                             <div className="reveal text-center mb-20">
                                 <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Entraide</span>
                                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white drop-shadow-xl">Support & FAQ</h2>
                             </div>
-                            <div className="space-y-4">
+                            <div className="space-y-4 reveal">
                                 {faqs.map((faq, i) => (
-                                    <div key={i} className={`reveal glass-card rounded-2xl overflow-hidden group transition-all duration-300 ${activeFaq === i ? 'border-brand/40 bg-white/[0.04]' : 'hover:bg-white/[0.03]'}`} style={{transitionDelay: `${i * 100}ms`}}>
+                                    <div key={i} className={`glass-card rounded-2xl overflow-hidden group transition-all duration-300 ${activeFaq === i ? 'border-brand/40 bg-white/[0.04]' : 'hover:bg-white/[0.03]'}`}>
                                         <button onClick={() => setActiveFaq(activeFaq === i ? null : i)} className="w-full px-8 py-6 text-left flex justify-between items-center outline-none">
                                             <span className={`font-bold text-lg transition-colors font-display tracking-wide ${activeFaq === i ? 'text-white' : 'text-white/80 group-hover:text-white'}`}>{faq.q}</span>
                                             <span className={`flex items-center justify-center w-8 h-8 rounded-full border transition-all duration-300 ${activeFaq === i ? 'rotate-45 border-brand bg-brand/10 text-brand' : 'border-white/10 text-white/50 group-hover:bg-white/5'}`}>
@@ -958,7 +933,7 @@
                         </div>
                     </section>
 
-                    {/* 6. Feuille de Route Section */}
+                    {/* 5. Feuille de Route Section */}
                     <section id="feuille-de-route" className="w-full py-32 px-6 relative z-10 flex flex-col items-center">
                         <div className="w-full max-w-7xl flex flex-col items-center">
                             <div className="reveal text-center mb-24">
@@ -970,7 +945,7 @@
                                 <div className="absolute top-10 left-[2.4rem] lg:left-0 lg:top-10 w-px lg:w-full h-[calc(100%-5rem)] lg:h-px roadmap-line"></div>
                                 
                                 {roadmap.map((step, i) => (
-                                    <div key={i} className={`reveal relative z-10 flex flex-row lg:flex-col items-start lg:items-center w-full lg:w-1/3 text-left lg:text-center pl-4 lg:pl-0 transition-all duration-500 ${!step.active && 'opacity-50 grayscale hover:grayscale-0 hover:opacity-100'}`} style={{transitionDelay: `${i * 150}ms`}}>
+                                    <div key={i} className={`reveal relative z-10 flex flex-row lg:flex-col items-start lg:items-center w-full lg:w-1/3 text-left lg:text-center pl-4 lg:pl-0 transition-all duration-500 ${!step.active && 'opacity-60 hover:opacity-100'}`} style={{transitionDelay: `${i * 150}ms`}}>
                                         <div className={`flex-shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-2xl mb-0 lg:mb-8 mr-6 lg:mr-0 flex items-center justify-center glass-card border-2 bg-[#05000A] transition-all duration-500 ${step.active ? 'border-brand shadow-[0_0_30px_rgba(255,30,237,0.3)] scale-110' : 'border-white/10'}`}>
                                             <div className={`w-3 h-3 rounded-full ${step.active ? 'bg-brand animate-glow-pulse shadow-[0_0_10px_rgba(255,30,237,0.8)]' : 'bg-white/30'}`}></div>
                                         </div>
@@ -980,7 +955,7 @@
                                             <div className={`inline-block px-3 py-1 rounded-md text-[9px] font-black tracking-[0.2em] mb-4 border ${step.active ? 'bg-brand/10 border-brand/30 text-brand' : 'bg-white/5 border-white/10 text-white/40'}`}>
                                                 {step.status}
                                             </div>
-                                            <p className="text-sm leading-relaxed text-white/60 max-w-[320px] lg:mx-auto font-medium">
+                                            <p className={`text-sm leading-relaxed max-w-[320px] lg:mx-auto font-medium ${step.blurred ? 'text-white/30 blur-sm select-none' : 'text-white/60'}`}>
                                                 {step.desc}
                                             </p>
                                         </div>
@@ -990,14 +965,14 @@
                         </div>
                     </section>
 
-                    {/* 7. Nous Rejoindre Section */}
+                    {/* 6. Nous Rejoindre Section */}
                     <section id="rejoindre" className="w-full py-40 px-6 flex flex-col items-center relative z-20">
                          <div className="absolute inset-0 bg-gradient-to-t from-brand/5 via-transparent to-transparent opacity-50 pointer-events-none"></div>
                          <div className="max-w-4xl w-full text-center relative z-10 glass-card p-12 lg:p-20 rounded-[3rem] border-white/10 shadow-2xl">
                             <div className="reveal">
                                 <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Communauté</span>
                                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white mb-8">Nous Rejoindre</h2>
-                                <p className="text-white/60 text-lg mb-12 max-w-xl mx-auto font-medium">L'aventure ne fait que commencer. Rejoignez le Discord pour ne rien manquer des annonces et participer à la vie du serveur.</p>
+                                <p className="text-white/60 text-lg mb-12 max-w-xl mx-auto font-medium">L'aventure ne fait que commencer. Rejoignez le <strong className="text-[#5865F2] font-semibold">Discord</strong> pour ne rien manquer des annonces et participer à la vie du serveur.</p>
                                 
                                 <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6">
                                     <a href="https://discord.gg/daybreak" target="_blank" rel="noopener noreferrer" className="group bg-[#5865F2] hover:bg-[#4a56d4] text-white py-4 px-8 rounded-2xl font-bold uppercase tracking-widest text-sm flex items-center justify-center gap-3 transition-all transform hover:-translate-y-1 shadow-[0_10px_20px_rgba(88,101,242,0.3)] hover:shadow-[0_15px_30px_rgba(88,101,242,0.5)]">
