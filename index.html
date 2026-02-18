@@ -915,71 +915,93 @@
                     </section>
 
                     {/* 3. Ressources Section */}
-                    <section id="ressources" className="w-full py-32 px-6 relative z-10 flex flex-col items-center">
-                        <div className="w-full max-w-7xl flex flex-col items-center">
-                            <div className="reveal text-center mb-16">
-                                <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Téléchargements</span>
-                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white drop-shadow-xl mb-6">Ressources</h2>
-                                <p className="text-white/50 max-w-xl mx-auto text-sm font-medium">
-                                    Pas besoin de modpack pour venir jouer. Mais si tu veux un jeu plus fluide ou que tu veux profiter du micro en jeu, on a préparé deux options.
-                                </p>
-                            </div>
+<section id="ressources" className="w-full py-32 px-6 relative z-10 flex flex-col items-center">
+    <div className="w-full max-w-7xl flex flex-col items-center">
+        <div className="reveal text-center mb-16">
+            <span className="text-brand font-bold tracking-[0.5em] uppercase text-xs mb-4 block">Téléchargements</span>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-black uppercase tracking-tighter italic text-white drop-shadow-xl mb-6">Ressources</h2>
+            <p className="text-white/50 max-w-xl mx-auto text-sm font-medium">
+                Pas besoin de modpack pour venir jouer. Mais pour une expérience visuelle optimale, voici nos recommandations.
+            </p>
+        </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl mb-8">
-                                {/* Modpack Ultimate */}
-                                <div className="reveal glass-card p-8 lg:p-10 rounded-3xl relative overflow-hidden group hover:border-brand/40">
-                                    <div className="absolute -bottom-6 -right-6 p-6 opacity-5 group-hover:opacity-10 transition-all duration-500 group-hover:-translate-y-2 group-hover:-translate-x-2">
-                                        <Icons.Download className="w-48 h-48 text-brand" />
-                                    </div>
-                                    <div className="relative z-10 flex flex-col h-full">
-                                        <div className="flex justify-between items-start mb-6">
-                                            <h3 className="text-2xl font-display font-black italic uppercase text-white">Modpack Ultimate</h3>
-                                            <span className="inline-block bg-brand/20 border border-brand/30 text-brand text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(255,30,237,0.2)]">Recommandé</span>
-                                        </div>
-                                        <p className="text-white/60 text-sm lg:text-base leading-relaxed mb-10 flex-grow">
-                                            Expérience complète. Inclut le <strong className="text-brand font-semibold">chat vocal (Plasmo Voice)</strong>, des <strong className="text-brand font-semibold">shaders optimisés</strong> et des <strong className="text-brand font-semibold">animations fluides</strong>.
-                                        </p>
-                                        <div className="flex flex-wrap gap-3">
-                                            <a href="https://www.swisstransfer.com/d/1b1a3820-a8dc-4da8-a139-c8c05c5c857a" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 bg-white/5 hover:bg-brand hover:text-white border border-white/10 hover:border-brand text-white font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-[0_0_20px_rgba(255,30,237,0.4)] transform hover:-translate-y-1">
-                                                <span>Télécharger</span>
-                                                <Icons.Download className="w-4 h-4" />
-                                            </a>
-                                            <button onClick={() => setActiveModal('ultimate')} className="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 border border-white/10 text-white/70 hover:text-white font-bold uppercase tracking-widest text-xs px-4 py-3 rounded-xl transition-all transform hover:-translate-y-1">
-                                                <Icons.Info className="w-4 h-4" />
-                                                <span>Infos</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl mb-8">
+            
+            {/* Modpack Ultimate */}
+            <div className="reveal glass-card p-8 lg:p-10 rounded-3xl relative overflow-hidden group hover:border-brand/40 flex flex-col">
+                <div className="absolute -bottom-6 -right-6 p-6 opacity-5 group-hover:opacity-10 transition-all duration-500 group-hover:-translate-y-2 group-hover:-translate-x-2">
+                    <Icons.Download className="w-48 h-48 text-brand" />
+                </div>
+                <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex justify-between items-start mb-6">
+                        <h3 className="text-2xl font-display font-black italic uppercase text-white">Modpack Ultimate</h3>
+                        <span className="inline-block bg-brand/20 border border-brand/30 text-brand text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(255,30,237,0.2)]">Recommandé</span>
+                    </div>
+                    <p className="text-white/60 text-sm lg:text-base leading-relaxed mb-10 flex-grow">
+                        Expérience complète. Inclut le <strong className="text-brand font-semibold">chat vocal (Plasmo)</strong>, des <strong className="text-brand font-semibold">shaders</strong> et des <strong className="text-brand font-semibold">animations</strong>.
+                    </p>
+                    <div className="flex flex-wrap gap-3 mt-auto">
+                        <a href="https://www.swisstransfer.com/d/1b1a3820-a8dc-4da8-a139-c8c05c5c857a" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 bg-white/5 hover:bg-brand hover:text-white border border-white/10 hover:border-brand text-white font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-[0_0_20px_rgba(255,30,237,0.4)] transform hover:-translate-y-1">
+                            <span>Télécharger</span>
+                            <Icons.Download className="w-4 h-4" />
+                        </a>
+                        <button onClick={() => setActiveModal('ultimate')} className="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 border border-white/10 text-white/70 hover:text-white font-bold uppercase tracking-widest text-xs px-4 py-3 rounded-xl transition-all transform hover:-translate-y-1">
+                            <Icons.Info className="w-4 h-4" />
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-                                {/* Modpack FPS+ */}
-                                <div className="reveal glass-card p-8 lg:p-10 rounded-3xl relative overflow-hidden group hover:border-green-500/40" style={{transitionDelay: '150ms'}}>
-                                    <div className="absolute -bottom-6 -right-6 p-6 opacity-5 group-hover:opacity-10 transition-all duration-500 group-hover:-translate-y-2 group-hover:-translate-x-2">
-                                        <Icons.Leaf className="w-48 h-48 text-green-400" />
-                                    </div>
-                                    <div className="relative z-10 flex flex-col h-full">
-                                        <div className="flex justify-between items-start mb-6">
-                                            <h3 className="text-2xl font-display font-black italic uppercase text-white">Modpack FPS+</h3>
-                                            <span className="inline-block bg-green-500/20 border border-green-500/30 text-green-400 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(74,222,128,0.2)]">Performance</span>
-                                        </div>
-                                        <p className="text-white/60 text-sm lg:text-base leading-relaxed mb-10 flex-grow">
-                                            Performances maximales. Conserve le <strong className="text-green-400 font-semibold">chat vocal</strong> avec des réglages stricts axés sur un <strong className="text-green-400 font-semibold">maximum de FPS</strong> pour toutes les configurations.
-                                        </p>
-                                        <div className="flex flex-wrap gap-3">
-                                            <a href="https://www.swisstransfer.com/d/441f6dac-a553-41e3-9567-07c2303ca98d" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 bg-white/5 hover:bg-green-500 hover:text-black border border-white/10 hover:border-green-500 text-white font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-[0_0_20px_rgba(74,222,128,0.4)] transform hover:-translate-y-1">
-                                                <span>Télécharger</span>
-                                                <Icons.Download className="w-4 h-4" />
-                                            </a>
-                                            <button onClick={() => setActiveModal('light')} className="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 border border-white/10 text-white/70 hover:text-white font-bold uppercase tracking-widest text-xs px-4 py-3 rounded-xl transition-all transform hover:-translate-y-1">
-                                                <Icons.Info className="w-4 h-4" />
-                                                <span>Infos</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+            {/* Modpack FPS+ */}
+            <div className="reveal glass-card p-8 lg:p-10 rounded-3xl relative overflow-hidden group hover:border-green-500/40 flex flex-col" style={{transitionDelay: '150ms'}}>
+                <div className="absolute -bottom-6 -right-6 p-6 opacity-5 group-hover:opacity-10 transition-all duration-500 group-hover:-translate-y-2 group-hover:-translate-x-2">
+                    <Icons.Leaf className="w-48 h-48 text-green-400" />
+                </div>
+                <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex justify-between items-start mb-6">
+                        <h3 className="text-2xl font-display font-black italic uppercase text-white">Modpack FPS+</h3>
+                        <span className="inline-block bg-green-500/20 border border-green-500/30 text-green-400 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(74,222,128,0.2)]">Performance</span>
+                    </div>
+                    <p className="text-white/60 text-sm lg:text-base leading-relaxed mb-10 flex-grow">
+                        Performances maximales. Conserve le <strong className="text-green-400 font-semibold">chat vocal</strong> avec des réglages stricts pour <strong className="text-green-400 font-semibold">plus de FPS</strong>.
+                    </p>
+                    <div className="flex flex-wrap gap-3 mt-auto">
+                        <a href="https://www.swisstransfer.com/d/441f6dac-a553-41e3-9567-07c2303ca98d" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 bg-white/5 hover:bg-green-500 hover:text-black border border-white/10 hover:border-green-500 text-white font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-[0_0_20px_rgba(74,222,128,0.4)] transform hover:-translate-y-1">
+                            <span>Télécharger</span>
+                            <Icons.Download className="w-4 h-4" />
+                        </a>
+                        <button onClick={() => setActiveModal('light')} className="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 border border-white/10 text-white/70 hover:text-white font-bold uppercase tracking-widest text-xs px-4 py-3 rounded-xl transition-all transform hover:-translate-y-1">
+                            <Icons.Info className="w-4 h-4" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            {/* Resource Pack - Stay True */}
+            <div className="reveal glass-card p-8 lg:p-10 rounded-3xl relative overflow-hidden group hover:border-cyan-500/40 flex flex-col" style={{transitionDelay: '300ms'}}>
+                <div className="absolute -bottom-6 -right-6 p-6 opacity-5 group-hover:opacity-10 transition-all duration-500 group-hover:-translate-y-2 group-hover:-translate-x-2">
+                    <Icons.Map className="w-48 h-48 text-cyan-400" />
+                </div>
+                <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex justify-between items-start mb-6">
+                        <h3 className="text-2xl font-display font-black italic uppercase text-white">Resource Pack</h3>
+                        <span className="inline-block bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-[0_0_10px_rgba(34,211,238,0.2)]">Texture</span>
+                    </div>
+                    <p className="text-white/60 text-sm lg:text-base leading-relaxed mb-10 flex-grow">
+                        Vous jouez en Vanilla ? Installez le pack <strong className="text-cyan-400 font-semibold">Stay True</strong>. Il améliore les textures de base, l'herbe et les feuilles sans dénaturer le jeu.
+                    </p>
+                    <div className="flex flex-wrap gap-3 mt-auto">
+                        <a href="https://www.swisstransfer.com/d/4965a82e-476e-4055-b8c5-7a9b91a18d03" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 bg-white/5 hover:bg-cyan-500 hover:text-black border border-white/10 hover:border-cyan-500 text-white font-bold uppercase tracking-widest text-xs px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transform hover:-translate-y-1 w-full">
+                            <span>Télécharger</span>
+                            <Icons.Download className="w-4 h-4" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
 
                     {/* 4. Support Section */}
                     <section id="support" className="w-full py-32 px-6 flex flex-col items-center relative z-10">
