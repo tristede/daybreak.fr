@@ -1119,41 +1119,55 @@
         const closeBtn = document.getElementById('close-widget');
         const reopenBtn = document.getElementById('reopen-widget');
 
-        // ===== DRAG AND DROP =====
-        header.addEventListener('mousedown', startDragging);
-        document.addEventListener('mousemove', drag);
-        document.addEventListener('mouseup', stopDragging);
+        // ===== DRAG AND DROP (POINTER EVENTS - CROSS-BROWSER) =====
+        header.addEventListener('pointerdown', startDragging);
+        document.addEventListener('pointermove', drag);
+        document.addEventListener('pointerup', stopDragging);
+        document.addEventListener('pointercancel', stopDragging);
 
         function startDragging(e) {
             if (e.target.closest('.widget-close-btn')) return;
+            
+            e.preventDefault(); // CRUCIAL POUR WINDOWS
+            
             isDragging = true;
             offsetX = e.clientX - widget.offsetLeft;
             offsetY = e.clientY - widget.offsetTop;
+            
             widget.classList.add('dragging');
-            // Fix Deadlock mobile
-            widget.style.touchAction = 'none';
+            
+            // Capture le pointeur
+            header.setPointerCapture(e.pointerId);
         }
 
         function drag(e) {
             if (!isDragging) return;
             e.preventDefault(); 
+            
             let newX = e.clientX - offsetX;
             let newY = e.clientY - offsetY;
+            
             const maxX = window.innerWidth - widget.offsetWidth;
             const maxY = window.innerHeight - widget.offsetHeight;
+            
             newX = Math.max(0, Math.min(newX, maxX));
             newY = Math.max(0, Math.min(newY, maxY));
+            
             widget.style.left = newX + 'px';
             widget.style.top = newY + 'px';
-            widget.style.right = 'auto';
+            widget.style.right = 'auto'; 
+            
             savePosition(newX, newY);
         }
 
-        function stopDragging() {
-            if(!isDragging) return;
+        function stopDragging(e) {
+            if (!isDragging) return;
             isDragging = false;
             widget.classList.remove('dragging');
-            widget.style.touchAction = 'auto';
+            
+            if (e && e.pointerId) {
+                header.releasePointerCapture(e.pointerId);
+            }
         }
 
         // ===== FERMETURE/RÉOUVERTURE =====
@@ -1253,39 +1267,6 @@
                 document.getElementById('status-text').innerText = "ERREUR RÉSEAU";
             }
         }
-
-        // ===== SUPPORT TACTILE =====
-        header.addEventListener('touchstart', (e) => {
-            if (e.target.closest('.widget-close-btn')) return;
-            const touch = e.touches[0];
-            offsetX = touch.clientX - widget.offsetLeft;
-            offsetY = touch.clientY - widget.offsetTop;
-            isDragging = true;
-            widget.classList.add('dragging');
-            widget.style.touchAction = 'none';
-        }, { passive: true });
-
-        document.addEventListener('touchmove', (e) => {
-            if (!isDragging) return;
-            if(e.cancelable) e.preventDefault(); 
-            const touch = e.touches[0];
-            let newX = touch.clientX - offsetX;
-            let newY = touch.clientY - offsetY;
-            const maxX = window.innerWidth - widget.offsetWidth;
-            const maxY = window.innerHeight - widget.offsetHeight;
-            newX = Math.max(0, Math.min(newX, maxX));
-            newY = Math.max(0, Math.min(newY, maxY));
-            widget.style.left = newX + 'px';
-            widget.style.top = newY + 'px';
-            widget.style.right = 'auto';
-            savePosition(newX, newY);
-        }, { passive: false });
-
-        document.addEventListener('touchend', () => {
-            isDragging = false;
-            widget.classList.remove('dragging');
-            widget.style.touchAction = 'auto';
-        });
 
         // ===== INITIALISATION =====
         window.addEventListener('load', () => {
